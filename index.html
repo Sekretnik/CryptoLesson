@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Шифрование: алгоритмы и протоколы</title>
+<style>
+:root{--pri:#6d28d9;--dk:#5b21b6;--soft:#f3efff;--mid:#e4dbfd;--bd:#cdbdf7;--ink:#2a1f45;--ok:#15803d;--bad:#b91c1c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+header{background:var(--pri);color:#fff;padding:40px 20px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(1.8rem,6vw,2.6rem)}
+header p{margin:0 auto;max-width:620px;opacity:.93}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:#fff;border-bottom:2px solid var(--mid);display:flex;gap:6px;overflow-x:auto;padding:8px 12px;z-index:5}
+nav a{white-space:nowrap;color:var(--pri);text-decoration:none;padding:6px 14px;border-radius:999px;font-weight:600}
+nav a:hover{background:var(--soft)}
+main{max-width:940px;margin:0 auto;padding:8px 20px 50px}
+h2{color:var(--pri);margin:34px 0 6px;font-size:1.6rem}
+.lead{color:#6b5f8a;margin:0 0 14px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:-1px}
+.tabs button{border-radius:12px 12px 0 0;background:var(--mid);color:var(--dk);border:0;padding:9px 18px;font-weight:600}
+.tabs button.on{background:var(--pri);color:#fff}
+.panel{display:none;background:var(--soft);border:2px solid var(--pri);border-radius:0 14px 14px 14px;padding:18px}
+.panel.on{display:block}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+input,select,textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--bd);border-radius:10px;padding:7px 10px;max-width:100%}
+textarea{width:100%;min-height:60px}
+button{font:inherit;cursor:pointer;border:0;background:var(--pri);color:#fff;border-radius:999px;padding:7px 18px}
+.out{background:#fff;border:1px dashed var(--pri);border-radius:10px;padding:10px 12px;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all;min-height:44px;margin-top:8px;font-weight:700;color:var(--dk)}
+.strip{overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;margin:8px 0;background:#fff;border-radius:10px;padding:8px}
+.strip div{white-space:nowrap;letter-spacing:.35em}.strip .b{color:var(--pri);font-weight:700}
+.ab{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0}
+.ab div{width:30px;text-align:center;background:#fff;border:1px solid var(--bd);border-radius:8px;font-family:ui-monospace,monospace;font-size:.85rem;padding:2px 0}
+.ab div i{display:block;font-style:normal;color:var(--bd);line-height:1}
+.ab div.h{background:var(--pri);color:#fff;border-color:var(--pri)}.ab div.h i{color:#fff}
+.vt{overflow:auto;max-height:430px;background:#fff;border-radius:10px;padding:6px;margin-top:10px}
+.vt table{border-collapse:collapse;font-family:ui-monospace,monospace;font-size:12px}
+.vt td{width:22px;height:22px;text-align:center;border:1px solid var(--mid)}
+.vt td.hd{background:var(--mid);font-weight:700;color:var(--dk)}
+.vt td.hr,.vt td.hc{background:var(--pri);color:#fff}
+.vt td.hx{background:#f59e0b;color:#fff;font-weight:700}
+.rail{font-family:ui-monospace,monospace;background:#fff;border-radius:10px;padding:8px;overflow-x:auto;white-space:pre;line-height:1.5;margin-top:8px;color:var(--dk)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{background:var(--soft);border:1px solid var(--bd);border-radius:14px;padding:14px 18px}
+.card h3{margin:0 0 4px;font-size:1.05rem;color:var(--pri)}.card p{margin:0}
+details.m{margin:8px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd)}
+details.m summary{background:var(--pri);color:#fff;padding:12px 16px;font-weight:600;cursor:pointer}
+details.m .in{background:var(--soft);padding:12px 18px}
+details.m ul{margin:6px 0 0;padding-left:20px}
+.flow{counter-reset:s;display:grid;gap:8px}
+.flow div{counter-increment:s;background:var(--soft);border-radius:12px;padding:10px 14px 10px 52px;position:relative}
+.flow div:before{content:counter(s);position:absolute;left:12px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--pri);color:#fff;text-align:center;line-height:28px;font-weight:700}
+.task{margin:10px 0}.task.ok{border-color:var(--ok);background:#f0fdf4}
+.msg{font-weight:600}
+code{background:var(--mid);padding:1px 6px;border-radius:6px;word-break:break-all}
+details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
+.sc{font-weight:700;color:var(--pri)}
+.wheel{position:relative;width:280px;height:280px;margin:10px auto;background:#fff;border-radius:50%;border:2px solid var(--mid)}
+.wheel b{position:absolute;left:50%;top:50%;width:20px;margin:-9px 0 0 -10px;text-align:center;font:600 12px ui-monospace,monospace}
+.wheel b.i{color:#fff;background:var(--pri);border-radius:50%;font-size:10px;width:15px;margin-left:-7px;margin-top:-7px;line-height:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chips span{background:#fff;border:1px solid var(--bd);border-radius:8px;padding:2px 8px;font:12px ui-monospace,monospace}
+.fl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.fl span{background:#fff;border:1px solid var(--bd);border-radius:8px;padding:3px 10px}.fl span.k{background:var(--pri);color:#fff}
+.sw{display:inline-block;width:24px;height:24px;border-radius:50%;border:1px solid #0002}
+.sq{background:var(--soft);border:2px solid var(--pri);border-radius:14px;padding:14px}
+.lf{display:flex;justify-content:space-between;font-weight:700;color:var(--dk);border-bottom:2px dashed var(--bd);padding-bottom:4px;margin-bottom:8px}
+.m{width:78%;background:var(--mid);border-radius:10px;padding:6px 12px;margin:6px 0;color:var(--dk)}
+.m.r{margin-left:auto}.m.l{margin-right:auto}.m.b,.m.c{margin-left:auto;margin-right:auto;text-align:center;width:90%}
+.m.c{background:#fde68a}.m.cur{background:var(--pri);color:#fff}
+.pb{height:6px;background:var(--mid);border-radius:4px;margin:10px 0}.pb div{height:100%;background:var(--pri);border-radius:4px;transition:width .3s}
+.spy{color:#b45309}
+.layers div{margin:6px auto;padding:10px 16px;border-radius:10px;color:#fff;display:flex;flex-direction:column}
+.layers div:nth-child(1){background:#4c1d95}.layers div:nth-child(2){background:#5b21b6;width:94%}.layers div:nth-child(3){background:#6d28d9;width:88%}.layers div:nth-child(4){background:#7c3aed;width:82%}
+.layers span{opacity:.92;font-size:.93rem}
+</style></head><body>
+<header><h1>Шифрование: алгоритмы и протоколы</h1><p>Классические шифры, современные методы шифрования, протоколы защиты данных и практические задания.</p></header>
+<nav><a href="#c">Классические шифры</a><a href="#m">Современные методы</a><a href="#p">Протоколы</a><a href="#t">Задания</a></nav>
+<main>
+<h2 id="c">Классические шифры</h2>
+<p class="lead">Выбери шифр, введи текст и смотри, как он работает. Символы вне алфавита остаются как есть.</p>
+<div class="tabs" id="tabs"><button class="on" data-t="p1">Цезарь</button><button data-t="p2">Атбаш</button><button data-t="p3">Виженер</button><button data-t="p4">Забор</button></div>
+
+<div class="panel on" id="p1">
+<p><b>Шифр Цезаря:</b> каждая буква сдвигается на одно и то же число позиций. Ключей всего 25, поэтому шифр вскрывается перебором.</p>
+<div class="row"><select id="c-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select>
+<select id="c-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
+<label>Сдвиг: <b id="c-sv">3</b> <input type="range" id="c-sh" min="1" max="25" value="3"></label></div>
+<textarea id="c-in">HELLO WORLD</textarea>
+<div class="wheel" id="c-wh"></div><div class="strip" id="c-st"></div><div class="chips" id="c-ch"></div><div class="out" id="c-out"></div></div>
+
+<div class="panel" id="p2">
+<p><b>Атбаш:</b> алфавит записан наоборот, первая буква меняется на последнюю, вторая на предпоследнюю и т. д. Ключа нет, а шифрование и расшифровка выполняются одинаково. Буквы из твоего текста подсвечены в таблице.</p>
+<div class="row"><select id="a-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select></div>
+<textarea id="a-in">HELLO WORLD</textarea>
+<div class="ab" id="a-grid"></div><div class="chips" id="a-ch"></div><div class="out" id="a-out"></div></div>
+
+<div class="panel" id="p3">
+<p><b>Шифр Виженера:</b> ключевое слово повторяется под текстом. Буква текста ищется в верхней строке таблицы, буква ключа в левом столбце, а на их пересечении (оранжевая клетка) стоит буква шифртекста. Работает с латиницей и кириллицей.</p>
+<div class="row"><select id="v-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select><select id="v-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
+<input id="v-key" value="LEMON" placeholder="Ключ"></div>
+<textarea id="v-in">ATTACK AT DAWN</textarea>
+<div class="chips" id="v-ch"></div><div class="out" id="v-out"></div><div class="vt" id="v-tab"></div></div>
+
+<div class="panel" id="p4">
+<p><b>Шифр «забор»:</b> текст пишется зигзагом на нескольких «рельсах», а затем строки читаются одна за другой. Буквы не меняются, а только переставляются. Работает с латиницей и кириллицей, пробелы убираются.</p>
+<div class="row"><select id="f-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
+<label>Рельсов: <select id="f-n"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label></div>
+<textarea id="f-in">WE ARE DISCOVERED</textarea>
+<div class="rail" id="f-vis"></div><div class="out" id="f-out"></div></div>
+
+<h2 id="m">Современные методы</h2>
+<p class="lead">Секретность держится не на тайне алгоритма, а на тайне ключа. Открой раздел, чтобы увидеть примеры использования.</p>
+<details class="m"><summary>Симметричное шифрование (AES, ChaCha20)</summary><div class="in">Один ключ и для шифрования, и для расшифровки. Очень быстро, но ключ нужно как-то безопасно передать.<div class="fl"><span>Текст</span>→<span class="k">ключ</span>→<span>Шифртекст</span>→<span class="k">тот же ключ</span>→<span>Текст</span></div><ul><li>Шифрование данных в HTTPS-соединении</li><li>Шифрование диска и файлов (BitLocker, FileVault)</li><li>Защита Wi-Fi (WPA2/WPA3) и VPN</li><li>Шифрование данных в смартфоне</li></ul></div></details>
+<details class="m"><summary>Асимметричное шифрование (RSA, эллиптические кривые)</summary><div class="in">Пара ключей: открытым шифруют, закрытым расшифровывают. Передавать секретный ключ не нужно, но алгоритм медленнее.<div class="fl"><span>Текст</span>→<span class="k">открытый ключ</span>→<span>Шифртекст</span>→<span class="k">закрытый ключ</span>→<span>Текст</span></div><ul><li>Сертификаты сайтов</li><li>Вход на сервер по SSH-ключу</li><li>Шифрование электронной почты (PGP)</li><li>Безопасная передача сеансового ключа</li></ul></div></details>
+<details class="m"><summary>Обмен ключами (Диффи — Хеллман)</summary><div class="in">Двое договариваются об общем секрете по открытому каналу. Подслушивающий видит лишь промежуточные числа. Аналогия со смешиванием красок: смешать легко, а разделить обратно трудно.<div class="fl"><b>Алиса:</b><i class="sw" style="background:#facc15"></i>+<i class="sw" style="background:#dc2626"></i>=<i class="sw" style="background:#f97316"></i>отправляет Бобу</div><div class="fl"><b>Боб:</b><i class="sw" style="background:#facc15"></i>+<i class="sw" style="background:#2563eb"></i>=<i class="sw" style="background:#16a34a"></i>отправляет Алисе</div><div class="fl"><b>Общий секрет:</b> Алиса <i class="sw" style="background:#16a34a"></i>+<i class="sw" style="background:#dc2626"></i>=<i class="sw" style="background:#92400e"></i>, Боб <i class="sw" style="background:#f97316"></i>+<i class="sw" style="background:#2563eb"></i>=<i class="sw" style="background:#92400e"></i></div><p style="font-size:.88rem;color:#6b5f8a;margin:0">Жёлтый общий цвет виден всем, красный и синий остаются секретными.</p><ul><li>Рукопожатие TLS в браузере</li><li>Мессенджеры со сквозным шифрованием (Signal)</li><li>VPN-туннели</li></ul></div></details>
+<details class="m"><summary>Хеш-функции (SHA-256) и демонстрация</summary><div class="in">Из данных любого размера получается «отпечаток» фиксированной длины. Это не шифрование: назад отпечаток не расшифровать.<ul><li>Хранение паролей на сервере (в виде хешей, а не открытым текстом)</li><li>Проверка целостности скачанных файлов</li><li>Блокчейн и цифровые подписи</li></ul>
+<p><b>Лавинный эффект:</b> измени одну букву и посмотри на отпечаток.</p><textarea id="hin" style="min-height:44px">Привет</textarea><div class="out" id="hout"></div></div></details>
+<details class="m"><summary>Цифровая подпись</summary><div class="in">Подтверждает автора и неизменность данных: подписывают закрытым ключом, проверяют открытым.<ul><li>Подпись приложений и обновлений ОС</li><li>Электронные документы и госуслуги</li><li>Сертификаты HTTPS</li></ul></div></details>
+<details class="m"><summary>Постквантовая криптография</summary><div class="in">Алгоритмы, рассчитанные на защиту от будущих квантовых компьютеров. В 2024 году NIST (США) опубликовал первые стандарты.<ul><li>Постепенное внедрение в браузеры и TLS</li><li>Защита данных, которые нужно хранить десятилетиями</li></ul></div></details>
+
+<h2 id="p">Протоколы шифрования</h2>
+<p class="lead">Протокол объединяет алгоритмы в готовую схему защиты. Нажимай «Следующий шаг», чтобы пройти рукопожатие TLS 1.3, которое выполняется при открытии сайта по HTTPS.</p>
+<div class="sq"><div class="lf"><span>Браузер</span><span>Сервер</span></div><div id="sq"></div><div class="pb"><div id="sq-p"></div></div><div id="sq-d"></div><div class="row" style="margin-top:10px"><button id="sq-n">Следующий шаг</button><button id="sq-r">Сначала</button></div></div>
+<h3 style="color:var(--pri);margin:24px 0 6px">Что видит перехватчик</h3>
+<div class="sq"><p style="margin:0 0 8px">Пользователь отправляет данные на сайт, а злоумышленник перехватывает трафик в открытой сети Wi-Fi.</p><textarea id="sn-in">login=ivan&amp;password=qwerty123</textarea><div class="row" style="margin-top:8px"><button id="sn-a">HTTP (без шифрования)</button><button id="sn-b">HTTPS (TLS)</button></div><div class="out" id="sn-out" style="white-space:pre-wrap"></div><p style="margin:6px 0 0;font-size:.85rem;color:#6b5f8a">Шифртекст для HTTPS показан условно: это иллюстрация, а не реальное шифрование.</p></div>
+<h3 style="color:var(--pri);margin:24px 0 6px">На каком уровне работает защита</h3>
+<div class="layers"><div><b>Прикладной уровень: Signal, PGP, SSH</b><span>Шифрует само приложение, поэтому защита сквозная между собеседниками.</span></div><div><b>Транспортный уровень: TLS / HTTPS</b><span>Защищает соединение с сайтом, почтой, API.</span></div><div><b>Сетевой уровень: IPsec, WireGuard (VPN)</b><span>Шифрует весь трафик устройства в туннеле до VPN-сервера.</span></div><div><b>Канальный уровень: WPA2 / WPA3</b><span>Защищает радиоканал между устройством и роутером Wi-Fi.</span></div></div>
+
+<h2 id="t">Задания</h2>
+<p class="lead">Ответ вводится без пробелов, регистр не важен. Решено: <span class="sc" id="sc">0 / 10</span></p>
+<div id="tasks"></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const AL={en:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",ru:"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"},LA=AL.en;
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tabs button,.panel").forEach(e=>e.classList.remove("on"));b.classList.add("on");$(b.dataset.t).classList.add("on")});
+const map=(t,A,f)=>[...t].map(ch=>{const i=A.indexOf(ch.toUpperCase());return i<0?ch:A[f(i,A.length)]}).join("");
+const chips=(id,l)=>$(id).innerHTML=l.slice(0,16).map(x=>"<span>"+x+"</span>").join("");
+function caesar(){const A=AL[$("c-al").value],n=A.length,s=+$("c-sh").value*+$("c-md").value,m=x=>((x%n)+n)%n,st=[];
+$("c-sv").textContent=$("c-sh").value;
+$("c-out").textContent=map($("c-in").value,A,i=>m(i+s));
+[...$("c-in").value.toUpperCase()].forEach(c=>{const i=A.indexOf(c);if(i>=0)st.push(c+"("+i+") "+(s<0?"−":"+")+Math.abs(s)+" = <b>"+A[m(i+s)]+"</b>("+m(i+s)+")")});
+chips("c-ch",st);
+$("c-st").innerHTML="<div>"+A+'</div><div class="b">'+[...A].map((_,i)=>A[m(i+s)]).join("")+"</div>";
+let w="";[...A].forEach((c,i)=>{const a=360/n*i;w+='<b style="transform:rotate('+a+"deg) translateY(-122px) rotate(-"+a+'deg)">'+c+'</b><b class="i" style="transform:rotate('+a+"deg) translateY(-86px) rotate(-"+a+'deg)">'+A[m(i+s)]+"</b>"});
+$("c-wh").innerHTML=w}
+function atbash(){const A=AL[$("a-al").value],n=A.length,t=$("a-in").value.toUpperCase(),st=[];
+$("a-out").textContent=map($("a-in").value,A,(i,n)=>n-1-i);
+[...t].forEach(c=>{const i=A.indexOf(c);if(i>=0)st.push(c+"("+i+") → "+(n-1)+"−"+i+" = <b>"+A[n-1-i]+"</b>("+(n-1-i)+")")});chips("a-ch",st);
+$("a-grid").innerHTML=[...A].map((c,i)=>'<div class="'+(t.includes(c)||t.includes(A[n-1-i])?"h":"")+'">'+c+"<i>↕</i>"+A[n-1-i]+"</div>").join("")}
+let cells=[],vA="";
+function bt(A){const n=A.length;let h='<table><tr><td class="hd"></td>'+[...A].map(c=>'<td class="hd">'+c+"</td>").join("")+"</tr>";
+for(let r=0;r<n;r++){h+='<tr><td class="hd">'+A[r]+"</td>";for(let c=0;c<n;c++)h+="<td>"+A[(r+c)%n]+"</td>";h+="</tr>"}
+$("v-tab").innerHTML=h+"</table>";cells=[...$("v-tab").querySelectorAll("tr")].map(r=>[...r.children])}
+function vig(){const A=AL[$("v-al").value],n=A.length;if(A!==vA){bt(A);vA=A}
+const key=[...$("v-key").value.toUpperCase()].filter(c=>A.includes(c)),d=+$("v-md").value;let ki=0,o="",st=[];
+cells.flat().forEach(c=>c.classList.remove("hx","hr","hc"));
+for(const ch of $("v-in").value){const i=A.indexOf(ch.toUpperCase());if(i<0||!key.length){o+=ch;continue}
+const k=A.indexOf(key[ki++%key.length]),r=((i+d*k)%n+n)%n,p=d>0?i:r;o+=A[r];
+cells[k+1][p+1].classList.add("hx");cells[k+1][0].classList.add("hr");cells[0][p+1].classList.add("hc");
+st.push(A[i]+"("+i+") "+(d>0?"+":"−")+" "+A[k]+"("+k+") = <b>"+A[r]+"</b>("+r+")")}
+$("v-out").textContent=o;chips("v-ch",st)}
+function fence(){const d=+$("f-md").value,n=+$("f-n").value,t=$("f-in").value.toUpperCase().replace(/[^A-ZА-ЯЁ]/g,""),L=t.length;
+const rl=[];for(let i=0,r=0,s=1;i<L;i++){rl.push(r);if(r===0)s=1;else if(r===n-1)s=-1;r+=s}
+const ord=[...rl.keys()].sort((a,b)=>rl[a]-rl[b]||a-b);let plain=[];
+if(d>0){$("f-out").textContent=ord.map(i=>t[i]).join("");plain=[...t]}
+else{ord.forEach((p,j)=>plain[p]=t[j]);$("f-out").textContent=plain.join("")}
+let v="";for(let r=0;r<n;r++)v+=plain.map((c,i)=>rl[i]===r?c:"·").join(" ")+"\n";$("f-vis").textContent=v.trim()||"—"}
+["c-al","c-md","c-sh","c-in"].forEach(i=>$(i).addEventListener("input",caesar));
+["a-al","a-in"].forEach(i=>$(i).addEventListener("input",atbash));
+["v-al","v-md","v-key","v-in"].forEach(i=>$(i).addEventListener("input",vig));
+["f-md","f-n","f-in"].forEach(i=>$(i).addEventListener("input",fence));
+$("c-al").addEventListener("change",()=>{$("c-in").value=$("c-al").value==="ru"?"ПРИВЕТ МИР":"HELLO WORLD";caesar()});
+$("a-al").addEventListener("change",()=>{$("a-in").value=$("a-al").value==="ru"?"ПРИВЕТ МИР":"HELLO WORLD";atbash()});
+$("v-al").addEventListener("change",()=>{const r=$("v-al").value==="ru";$("v-in").value=r?"АТАКА НА РАССВЕТЕ":"ATTACK AT DAWN";$("v-key").value=r?"ЛИМОН":"LEMON";vig()});
+caesar();atbash();vig();fence();
+const S=[["r","ClientHello","Браузер сообщает, какие версии TLS и шифры он поддерживает, и отправляет свою долю обмена ключами.","Перехватчик видит: версию TLS и имя сайта. Содержимого страницы ещё нет."],
+["l","ServerHello","Сервер выбирает шифр и присылает свою долю обмена ключами.","Перехватчик видит выбранные алгоритмы, но не ключ."],
+["c","Вычисление общего ключа","Каждая сторона из своего секретного числа и чужой доли получает одинаковый ключ (принцип Диффи — Хеллмана). По сети он не передаётся.","Перехватчик видит обе доли, но без секретных чисел ключ не восстановить."],
+["l","Сертификат и подпись","Сервер доказывает, что он настоящий: его сертификат подписан доверенным центром. В TLS 1.3 этот шаг уже зашифрован.","Перехватчик видит только зашифрованные байты."],
+["b","Finished","Стороны подтверждают, что рукопожатие никто не подменил.","Подмена шагов была бы обнаружена."],
+["b","Защищённые данные","Страницы и формы шифруются быстрым симметричным алгоритмом AES-GCM или ChaCha20.","Перехватчик видит лишь размер и частоту пакетов."]];
+let si=0;
+function seq(){$("sq").innerHTML=S.slice(0,si+1).map((s,i)=>'<div class="m '+s[0]+(i===si?" cur":"")+'"><b>'+(i+1)+". "+s[1]+"</b> "+({r:"→",l:"←",b:"⇄",c:""})[s[0]]+"</div>").join("");
+$("sq-d").innerHTML="<b>"+S[si][1]+".</b> "+S[si][2]+'<br><span class="spy">'+S[si][3]+"</span>";$("sq-p").style.width=(si+1)/S.length*100+"%"}
+$("sq-n").onclick=()=>{si=Math.min(si+1,S.length-1);seq()};$("sq-r").onclick=()=>{si=0;seq()};seq();
+let hp=false;
+function sniff(){const t=$("sn-in").value;let o;
+if(!hp)o="Перехвачено (HTTP):\nPOST /login\n\n"+t;
+else{let x=0;for(const c of t)x=(x*31+c.charCodeAt(0))>>>0;let s="";for(let i=0;i<Math.max(48,t.length*2);i++){x=(x*1664525+1013904223)>>>0;s+=(x>>>24).toString(16).padStart(2,"0")+(i%16==15?"\n":" ")}o="Перехвачено (HTTPS):\n"+s}
+$("sn-out").textContent=o}
+$("sn-a").onclick=()=>{hp=false;sniff()};$("sn-b").onclick=()=>{hp=true;sniff()};$("sn-in").addEventListener("input",sniff);sniff();
+
+async function hs(){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode($("hin").value));$("hout").textContent=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){$("hout").textContent="SHA-256 недоступен в этом браузере"}}
+$("hin").addEventListener("input",hs);hs();
+const T=[
+["Цезарь: расшифруй <code>FUBSWR</code> (сдвиг на 3 назад).","CRYPTO","Каждую букву замени на ту, что на 3 позиции раньше: F→C. Можно проверить во вкладке «Цезарь»."],
+["Атбаш: расшифруй <code>HVXFIV</code>.","SECURE","A↔Z, B↔Y, C↔X… Смотри вкладку «Атбаш»."],
+["Виженер, ключ <code>LEMON</code>: расшифруй <code>LXFOPVEFRNHR</code>.","ATTACKATDAWN","Во вкладке «Виженер» выбери режим «Расшифровать»."],
+["Цезарь с неизвестным сдвигом: <code>UFXXBTWI</code>.","PASSWORD","Перебирай сдвиги от 1 до 25 во вкладке «Цезарь», пока не появится слово."],
+["Шифр «забор» на 2 рельса. Расшифруй английскую фразу <code>WAEICVRDERDSOEE</code>.","WEAREDISCOVERED","Вкладка «Забор», режим «Расшифровать», 2 рельса."],
+["Base64 — это шифрование? Декодируй <code>U0VDUkVU</code> любым декодером и впиши слово.","SECRET","Base64 — просто кодировка, ключа у неё нет."],
+["RSA (учебный): n = 33, e = 3. Зашифруй m = 5 по формуле c = m<sup>e</sup> mod n.","26","5³ = 125. Найди остаток от деления 125 на 33."],
+["RSA (учебный): n = 33, закрытый ключ d = 7. Расшифруй c = 31: m = c<sup>d</sup> mod n.","4","31 ≡ −2 (mod 33). Посчитай (−2)<sup>7</sup> mod 33."],
+["Диффи — Хеллман: p = 23, g = 5. Секрет Алисы a = 6, секрет Боба b = 15. Найди общий ключ.","2","A = 5⁶ mod 23 = 8. Общий ключ = B<sup>a</sup> mod 23, где B = 5¹⁵ mod 23 = 19."],
+["Какой протокол (три буквы) защищает соединение по HTTPS?","TLS","Он пришёл на смену SSL."]];
+const done=new Set();
+T.forEach((t,i)=>{const d=document.createElement("div");d.className="card task";
+d.innerHTML='<p style="margin:0 0 8px"><b>'+(i+1)+'.</b> '+t[0]+'</p><div class="row"><input id="a'+i+'" placeholder="Ответ"><button id="b'+i+'">Проверить</button><span class="msg" id="m'+i+'"></span></div><details class="h"><summary>Подсказка</summary>'+t[2]+'</details>';
+$("tasks").appendChild(d);
+$("b"+i).onclick=()=>{const v=$("a"+i).value.toUpperCase().replace(/[\s{}]/g,""),m=$("m"+i);
+if(v===t[1]){m.textContent="✓ Верно";m.style.color="var(--ok)";d.classList.add("ok");done.add(i)}
+else{m.textContent="✗ Попробуй ещё";m.style.color="var(--bad)"}
+$("sc").textContent=done.size+" / "+T.length}});
+</script></body></html>

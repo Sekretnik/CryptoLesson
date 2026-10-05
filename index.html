@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Шифрование: алгоритмы и протоколы</title>
+<title>Классические шифры</title>
 <style>
 :root{--pri:#6d28d9;--dk:#5b21b6;--soft:#f3efff;--mid:#e4dbfd;--bd:#cdbdf7;--ink:#2a1f45;--ok:#15803d;--bad:#b91c1c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
@@ -70,19 +70,21 @@ details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
 .layers div{margin:6px auto;padding:10px 16px;border-radius:10px;color:#fff;display:flex;flex-direction:column}
 .layers div:nth-child(1){background:#4c1d95}.layers div:nth-child(2){background:#5b21b6;width:94%}.layers div:nth-child(3){background:#6d28d9;width:88%}.layers div:nth-child(4){background:#7c3aed;width:82%}
 .layers span{opacity:.92;font-size:.93rem}
+.fq{display:flex;gap:8px;align-items:center;font-family:ui-monospace,monospace;margin:2px 0}.fq i{display:block;height:12px;background:var(--pri);border-radius:6px}.tag{background:var(--pri);color:#fff;border-radius:999px;padding:1px 10px;font-size:.8rem}ol{margin:4px 0 10px;padding-left:22px}
+.sg{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}.sg div{width:36px;text-align:center;background:#fff;border:1px solid var(--bd);border-radius:8px;padding:3px 2px}.sg b{display:block;font-family:ui-monospace,monospace;color:var(--dk)}.sg input{width:28px;padding:2px;text-align:center;font-family:ui-monospace,monospace;font-weight:700;border-color:var(--pri)}.sg div.u{background:var(--mid)}.sg input.bad{background:#fee2e2;border-color:var(--bad)}
 </style></head><body>
-<header><h1>Шифрование: алгоритмы и протоколы</h1><p>Классические шифры, современные методы шифрования, протоколы защиты данных и практические задания.</p></header>
-<nav><a href="#c">Классические шифры</a><a href="#m">Современные методы</a><a href="#p">Протоколы</a><a href="#t">Задания</a></nav>
+<header><h1>Классические шифры</h1><p>Цезарь, Атбаш, Виженер, «забор» и простая замена: демонстрации, алгоритмы и 20 заданий.</p></header>
+<nav><a href="#c">Шифры</a><a href="#t">Задания</a></nav>
 <main>
-<h2 id="c">Классические шифры</h2>
+<h2 id="c">Шифры</h2>
 <p class="lead">Выбери шифр, введи текст и смотри, как он работает. Символы вне алфавита остаются как есть.</p>
-<div class="tabs" id="tabs"><button class="on" data-t="p1">Цезарь</button><button data-t="p2">Атбаш</button><button data-t="p3">Виженер</button><button data-t="p4">Забор</button></div>
+<div class="tabs" id="tabs"><button class="on" data-t="p1">Цезарь</button><button data-t="p2">Атбаш</button><button data-t="p3">Виженер</button><button data-t="p4">Забор</button><button data-t="p5">Простая замена</button></div>
 
 <div class="panel on" id="p1">
-<p><b>Шифр Цезаря:</b> каждая буква сдвигается на одно и то же число позиций. Ключей всего 25, поэтому шифр вскрывается перебором.</p>
+<p><b>Шифр Цезаря:</b> каждая буква сдвигается на одно и то же число позиций. Количество ключей равно числу букв алфавита: 26 для латиницы и 33 для кириллицы. Сдвиг 0 оставляет текст без изменений, поэтому реально шифруют 25 вариантов для латиницы и 32 для кириллицы. Так мало ключей, что шифр вскрывается простым перебором.</p>
 <div class="row"><select id="c-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select>
 <select id="c-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
-<label>Сдвиг: <b id="c-sv">3</b> <input type="range" id="c-sh" min="1" max="25" value="3"></label></div>
+<label>Сдвиг: <input type="number" id="c-sh" min="1" max="25" value="3" style="width:80px"></label></div>
 <textarea id="c-in">HELLO WORLD</textarea>
 <div class="wheel" id="c-wh"></div><div class="strip" id="c-st"></div><div class="chips" id="c-ch"></div><div class="out" id="c-out"></div></div>
 
@@ -106,26 +108,21 @@ details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
 <textarea id="f-in">WE ARE DISCOVERED</textarea>
 <div class="rail" id="f-vis"></div><div class="out" id="f-out"></div></div>
 
-<h2 id="m">Современные методы</h2>
-<p class="lead">Секретность держится не на тайне алгоритма, а на тайне ключа. Открой раздел, чтобы увидеть примеры использования.</p>
-<details class="m"><summary>Симметричное шифрование (AES, ChaCha20)</summary><div class="in">Один ключ и для шифрования, и для расшифровки. Очень быстро, но ключ нужно как-то безопасно передать.<div class="fl"><span>Текст</span>→<span class="k">ключ</span>→<span>Шифртекст</span>→<span class="k">тот же ключ</span>→<span>Текст</span></div><ul><li>Шифрование данных в HTTPS-соединении</li><li>Шифрование диска и файлов (BitLocker, FileVault)</li><li>Защита Wi-Fi (WPA2/WPA3) и VPN</li><li>Шифрование данных в смартфоне</li></ul></div></details>
-<details class="m"><summary>Асимметричное шифрование (RSA, эллиптические кривые)</summary><div class="in">Пара ключей: открытым шифруют, закрытым расшифровывают. Передавать секретный ключ не нужно, но алгоритм медленнее.<div class="fl"><span>Текст</span>→<span class="k">открытый ключ</span>→<span>Шифртекст</span>→<span class="k">закрытый ключ</span>→<span>Текст</span></div><ul><li>Сертификаты сайтов</li><li>Вход на сервер по SSH-ключу</li><li>Шифрование электронной почты (PGP)</li><li>Безопасная передача сеансового ключа</li></ul></div></details>
-<details class="m"><summary>Обмен ключами (Диффи — Хеллман)</summary><div class="in">Двое договариваются об общем секрете по открытому каналу. Подслушивающий видит лишь промежуточные числа. Аналогия со смешиванием красок: смешать легко, а разделить обратно трудно.<div class="fl"><b>Алиса:</b><i class="sw" style="background:#facc15"></i>+<i class="sw" style="background:#dc2626"></i>=<i class="sw" style="background:#f97316"></i>отправляет Бобу</div><div class="fl"><b>Боб:</b><i class="sw" style="background:#facc15"></i>+<i class="sw" style="background:#2563eb"></i>=<i class="sw" style="background:#16a34a"></i>отправляет Алисе</div><div class="fl"><b>Общий секрет:</b> Алиса <i class="sw" style="background:#16a34a"></i>+<i class="sw" style="background:#dc2626"></i>=<i class="sw" style="background:#92400e"></i>, Боб <i class="sw" style="background:#f97316"></i>+<i class="sw" style="background:#2563eb"></i>=<i class="sw" style="background:#92400e"></i></div><p style="font-size:.88rem;color:#6b5f8a;margin:0">Жёлтый общий цвет виден всем, красный и синий остаются секретными.</p><ul><li>Рукопожатие TLS в браузере</li><li>Мессенджеры со сквозным шифрованием (Signal)</li><li>VPN-туннели</li></ul></div></details>
-<details class="m"><summary>Хеш-функции (SHA-256) и демонстрация</summary><div class="in">Из данных любого размера получается «отпечаток» фиксированной длины. Это не шифрование: назад отпечаток не расшифровать.<ul><li>Хранение паролей на сервере (в виде хешей, а не открытым текстом)</li><li>Проверка целостности скачанных файлов</li><li>Блокчейн и цифровые подписи</li></ul>
-<p><b>Лавинный эффект:</b> измени одну букву и посмотри на отпечаток.</p><textarea id="hin" style="min-height:44px">Привет</textarea><div class="out" id="hout"></div></div></details>
-<details class="m"><summary>Цифровая подпись</summary><div class="in">Подтверждает автора и неизменность данных: подписывают закрытым ключом, проверяют открытым.<ul><li>Подпись приложений и обновлений ОС</li><li>Электронные документы и госуслуги</li><li>Сертификаты HTTPS</li></ul></div></details>
-<details class="m"><summary>Постквантовая криптография</summary><div class="in">Алгоритмы, рассчитанные на защиту от будущих квантовых компьютеров. В 2024 году NIST (США) опубликовал первые стандарты.<ul><li>Постепенное внедрение в браузеры и TLS</li><li>Защита данных, которые нужно хранить десятилетиями</li></ul></div></details>
-
-<h2 id="p">Протоколы шифрования</h2>
-<p class="lead">Протокол объединяет алгоритмы в готовую схему защиты. Нажимай «Следующий шаг», чтобы пройти рукопожатие TLS 1.3, которое выполняется при открытии сайта по HTTPS.</p>
-<div class="sq"><div class="lf"><span>Браузер</span><span>Сервер</span></div><div id="sq"></div><div class="pb"><div id="sq-p"></div></div><div id="sq-d"></div><div class="row" style="margin-top:10px"><button id="sq-n">Следующий шаг</button><button id="sq-r">Сначала</button></div></div>
-<h3 style="color:var(--pri);margin:24px 0 6px">Что видит перехватчик</h3>
-<div class="sq"><p style="margin:0 0 8px">Пользователь отправляет данные на сайт, а злоумышленник перехватывает трафик в открытой сети Wi-Fi.</p><textarea id="sn-in">login=ivan&amp;password=qwerty123</textarea><div class="row" style="margin-top:8px"><button id="sn-a">HTTP (без шифрования)</button><button id="sn-b">HTTPS (TLS)</button></div><div class="out" id="sn-out" style="white-space:pre-wrap"></div><p style="margin:6px 0 0;font-size:.85rem;color:#6b5f8a">Шифртекст для HTTPS показан условно: это иллюстрация, а не реальное шифрование.</p></div>
-<h3 style="color:var(--pri);margin:24px 0 6px">На каком уровне работает защита</h3>
-<div class="layers"><div><b>Прикладной уровень: Signal, PGP, SSH</b><span>Шифрует само приложение, поэтому защита сквозная между собеседниками.</span></div><div><b>Транспортный уровень: TLS / HTTPS</b><span>Защищает соединение с сайтом, почтой, API.</span></div><div><b>Сетевой уровень: IPsec, WireGuard (VPN)</b><span>Шифрует весь трафик устройства в туннеле до VPN-сервера.</span></div><div><b>Канальный уровень: WPA2 / WPA3</b><span>Защищает радиоканал между устройством и роутером Wi-Fi.</span></div></div>
+<div class="panel" id="p5">
+<p><b>Шифр простой замены:</b> каждая буква алфавита заменяется другой по таблице, а ключом служит перестановка алфавита. Вариантов ключа 26! ≈ 4·10²⁶, поэтому перебором его не вскрыть, но частотный анализ справляется.</p>
+<p><b>Расшифровка с ключом:</b></p>
+<ol><li>Запиши таблицу: сверху обычный алфавит, снизу шифралфавит.</li><li>Поменяй строки местами: получится обратная таблица.</li><li>Каждую букву шифртекста найди в верхней строке обратной таблицы и замени на букву под ней.</li><li>Пробелы и знаки препинания оставь без изменений.</li></ol>
+<p><b>Вскрытие без ключа (частотный анализ):</b></p>
+<ol><li>Посчитай, сколько раз встречается каждая буква шифртекста (диаграмма ниже делает это автоматически).</li><li>Сопоставь самые частые буквы с частыми буквами языка: в русском О, Е, А, И, Н, Т, в английском E, T, A, O, I, N.</li><li>Найди короткие слова («и», «в», «на», «the», «and») и проверь догадки.</li><li>Подставляй найденные буквы и уточняй остальные по смыслу слов.</li></ol>
+<div class="row"><select id="s-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select><select id="s-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select><button id="s-rnd">Случайный ключ</button><button id="s-def">Пример ключа</button><button id="s-clr">Очистить таблицу</button></div>
+<div class="row"><div style="width:100%"><div style="font-size:.9rem;color:#6b5f8a">Верхняя буква — открытая, в поле под ней впиши её замену. Пустые поля в тексте показываются как «_».</div><div class="sg" id="s-tab"></div></div></div>
+<div id="s-err" style="color:var(--bad);font-weight:600"></div>
+<textarea id="s-in">HELLO WORLD</textarea>
+<div class="chips" id="s-ch"></div><div class="out" id="s-out"></div>
+<p style="margin:12px 0 4px"><b>Частота букв в тексте (топ-8):</b></p><div id="s-fq"></div></div>
 
 <h2 id="t">Задания</h2>
-<p class="lead">Ответ вводится без пробелов, регистр не важен. Решено: <span class="sc" id="sc">0 / 10</span></p>
+<p class="lead">Ответ вводится без пробелов, регистр не важен. Решено: <span class="sc" id="sc">0 / 20</span></p>
 <div id="tasks"></div>
 </main>
 <script>
@@ -134,9 +131,9 @@ const AL={en:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",ru:"АБВГДЕЁЖЗИЙКЛМНОП
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tabs button,.panel").forEach(e=>e.classList.remove("on"));b.classList.add("on");$(b.dataset.t).classList.add("on")});
 const map=(t,A,f)=>[...t].map(ch=>{const i=A.indexOf(ch.toUpperCase());return i<0?ch:A[f(i,A.length)]}).join("");
 const chips=(id,l)=>$(id).innerHTML=l.slice(0,16).map(x=>"<span>"+x+"</span>").join("");
-function caesar(){const A=AL[$("c-al").value],n=A.length,s=+$("c-sh").value*+$("c-md").value,m=x=>((x%n)+n)%n,st=[];
-$("c-sv").textContent=$("c-sh").value;
-$("c-out").textContent=map($("c-in").value,A,i=>m(i+s));
+function caesar(){const A=AL[$("c-al").value],n=A.length,s=(parseInt($("c-sh").value)||0)*+$("c-md").value,m=x=>((x%n)+n)%n,st=[];
+
+$("c-sh").max=n-1;$("c-out").textContent=map($("c-in").value,A,i=>m(i+s));
 [...$("c-in").value.toUpperCase()].forEach(c=>{const i=A.indexOf(c);if(i>=0)st.push(c+"("+i+") "+(s<0?"−":"+")+Math.abs(s)+" = <b>"+A[m(i+s)]+"</b>("+m(i+s)+")")});
 chips("c-ch",st);
 $("c-st").innerHTML="<div>"+A+'</div><div class="b">'+[...A].map((_,i)=>A[m(i+s)]).join("")+"</div>";
@@ -172,42 +169,39 @@ $("c-al").addEventListener("change",()=>{$("c-in").value=$("c-al").value==="ru"?
 $("a-al").addEventListener("change",()=>{$("a-in").value=$("a-al").value==="ru"?"ПРИВЕТ МИР":"HELLO WORLD";atbash()});
 $("v-al").addEventListener("change",()=>{const r=$("v-al").value==="ru";$("v-in").value=r?"АТАКА НА РАССВЕТЕ":"ATTACK AT DAWN";$("v-key").value=r?"ЛИМОН":"LEMON";vig()});
 caesar();atbash();vig();fence();
-const S=[["r","ClientHello","Браузер сообщает, какие версии TLS и шифры он поддерживает, и отправляет свою долю обмена ключами.","Перехватчик видит: версию TLS и имя сайта. Содержимого страницы ещё нет."],
-["l","ServerHello","Сервер выбирает шифр и присылает свою долю обмена ключами.","Перехватчик видит выбранные алгоритмы, но не ключ."],
-["c","Вычисление общего ключа","Каждая сторона из своего секретного числа и чужой доли получает одинаковый ключ (принцип Диффи — Хеллмана). По сети он не передаётся.","Перехватчик видит обе доли, но без секретных чисел ключ не восстановить."],
-["l","Сертификат и подпись","Сервер доказывает, что он настоящий: его сертификат подписан доверенным центром. В TLS 1.3 этот шаг уже зашифрован.","Перехватчик видит только зашифрованные байты."],
-["b","Finished","Стороны подтверждают, что рукопожатие никто не подменил.","Подмена шагов была бы обнаружена."],
-["b","Защищённые данные","Страницы и формы шифруются быстрым симметричным алгоритмом AES-GCM или ChaCha20.","Перехватчик видит лишь размер и частоту пакетов."]];
-let si=0;
-function seq(){$("sq").innerHTML=S.slice(0,si+1).map((s,i)=>'<div class="m '+s[0]+(i===si?" cur":"")+'"><b>'+(i+1)+". "+s[1]+"</b> "+({r:"→",l:"←",b:"⇄",c:""})[s[0]]+"</div>").join("");
-$("sq-d").innerHTML="<b>"+S[si][1]+".</b> "+S[si][2]+'<br><span class="spy">'+S[si][3]+"</span>";$("sq-p").style.width=(si+1)/S.length*100+"%"}
-$("sq-n").onclick=()=>{si=Math.min(si+1,S.length-1);seq()};$("sq-r").onclick=()=>{si=0;seq()};seq();
-let hp=false;
-function sniff(){const t=$("sn-in").value;let o;
-if(!hp)o="Перехвачено (HTTP):\nPOST /login\n\n"+t;
-else{let x=0;for(const c of t)x=(x*31+c.charCodeAt(0))>>>0;let s="";for(let i=0;i<Math.max(48,t.length*2);i++){x=(x*1664525+1013904223)>>>0;s+=(x>>>24).toString(16).padStart(2,"0")+(i%16==15?"\n":" ")}o="Перехвачено (HTTPS):\n"+s}
-$("sn-out").textContent=o}
-$("sn-a").onclick=()=>{hp=false;sniff()};$("sn-b").onclick=()=>{hp=true;sniff()};$("sn-in").addEventListener("input",sniff);sniff();
+const KD={en:"QWERTYUIOPASDFGHJKLZXCVBNM",ru:"ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ"};
+const cl=()=>[...$("s-tab").querySelectorAll("input")];
+function build(){const A=AL[$("s-al").value];$("s-tab").innerHTML=[...A].map(c=>"<div><b>"+c+'</b><input maxlength="1"></div>').join("");
+cl().forEach(e=>e.addEventListener("input",()=>{e.value=e.value.toUpperCase();sub()}))}
+const setKey=k=>cl().forEach((e,i)=>e.value=k?k[i]||"":"");
+function sub(){const A=AL[$("s-al").value],d=+$("s-md").value,t=$("s-in").value,ins=cl(),K=ins.map(e=>e.value);
+const dv=new Set(K.filter(v=>v&&K.indexOf(v)!==K.lastIndexOf(v))),used=new Set([...t.toUpperCase()]);
+ins.forEach((e,i)=>{e.classList.toggle("bad",dv.has(e.value)||(!!e.value&&!A.includes(e.value)));e.parentNode.classList.toggle("u",used.has(d>0?A[i]:K[i]))});
+$("s-err").textContent=dv.size?"Одна и та же буква вписана в таблицу несколько раз.":"";
+const cnt={};[...t.toUpperCase()].forEach(c=>{if(A.includes(c))cnt[c]=(cnt[c]||0)+1});
+const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,8),mx=top.length?top[0][1]:1;
+$("s-fq").innerHTML=top.map(([c,v])=>'<div class="fq"><b>'+c+'</b><i style="width:'+v/mx*180+'px"></i>'+v+"</div>").join("");
+const st=[];
+$("s-out").textContent=[...t].map(ch=>{const u=ch.toUpperCase();if(!A.includes(u))return ch;
+const r=d>0?(K[A.indexOf(u)]||"_"):(K.indexOf(u)>=0?A[K.indexOf(u)]:"_");st.push(u+" → <b>"+r+"</b>");return r}).join("");
+chips("s-ch",st)}
+["s-md","s-in"].forEach(i=>$(i).addEventListener("input",sub));$("s-md").addEventListener("change",sub);
+$("s-al").addEventListener("change",()=>{const r=$("s-al").value==="ru";build();setKey(KD[$("s-al").value]);$("s-in").value=r?"ПРИВЕТ МИР":"HELLO WORLD";sub()});
+$("s-rnd").onclick=()=>{const a=[...AL[$("s-al").value]];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}setKey(a.join(""));sub()};
+$("s-def").onclick=()=>{setKey(KD[$("s-al").value]);sub()};
+$("s-clr").onclick=()=>{setKey("");sub()};
+build();setKey(KD.en);sub();
+const H=(s,seed=7)=>{let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<s.length;i++){ch=s.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}
+h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)};
 
-async function hs(){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode($("hin").value));$("hout").textContent=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){$("hout").textContent="SHA-256 недоступен в этом браузере"}}
-$("hin").addEventListener("input",hs);hs();
-const T=[
-["Цезарь: расшифруй <code>FUBSWR</code> (сдвиг на 3 назад).","CRYPTO","Каждую букву замени на ту, что на 3 позиции раньше: F→C. Можно проверить во вкладке «Цезарь»."],
-["Атбаш: расшифруй <code>HVXFIV</code>.","SECURE","A↔Z, B↔Y, C↔X… Смотри вкладку «Атбаш»."],
-["Виженер, ключ <code>LEMON</code>: расшифруй <code>LXFOPVEFRNHR</code>.","ATTACKATDAWN","Во вкладке «Виженер» выбери режим «Расшифровать»."],
-["Цезарь с неизвестным сдвигом: <code>UFXXBTWI</code>.","PASSWORD","Перебирай сдвиги от 1 до 25 во вкладке «Цезарь», пока не появится слово."],
-["Шифр «забор» на 2 рельса. Расшифруй английскую фразу <code>WAEICVRDERDSOEE</code>.","WEAREDISCOVERED","Вкладка «Забор», режим «Расшифровать», 2 рельса."],
-["Base64 — это шифрование? Декодируй <code>U0VDUkVU</code> любым декодером и впиши слово.","SECRET","Base64 — просто кодировка, ключа у неё нет."],
-["RSA (учебный): n = 33, e = 3. Зашифруй m = 5 по формуле c = m<sup>e</sup> mod n.","26","5³ = 125. Найди остаток от деления 125 на 33."],
-["RSA (учебный): n = 33, закрытый ключ d = 7. Расшифруй c = 31: m = c<sup>d</sup> mod n.","4","31 ≡ −2 (mod 33). Посчитай (−2)<sup>7</sup> mod 33."],
-["Диффи — Хеллман: p = 23, g = 5. Секрет Алисы a = 6, секрет Боба b = 15. Найди общий ключ.","2","A = 5⁶ mod 23 = 8. Общий ключ = B<sup>a</sup> mod 23, где B = 5¹⁵ mod 23 = 19."],
-["Какой протокол (три буквы) защищает соединение по HTTPS?","TLS","Он пришёл на смену SSL."]];
+const T=[["Цезарь","Расшифруй слово <code>ТГУСОЯ</code>. Русский алфавит (33 буквы, с Ё), сдвиг 3.",[7474384029329285],"Замени каждую букву на ту, что стоит на 3 позиции раньше. Проверь во вкладке «Цезарь», выбрав кириллицу."],["Цезарь","Зашифруй слово ШКОЛА шифром Цезаря со сдвигом 5 (русский алфавит, 33 буквы).",[7370366625410426],"Сдвигай каждую букву на 5 позиций вперёд по русскому алфавиту."],["Цезарь","Сдвиг неизвестен. Расшифруй слово <code>ЫПЯПФЙ</code> (русский алфавит).",[2804244243608439],"Вариантов 32. Перебирай сдвиги во вкладке «Цезарь», пока не появится осмысленное слово."],["Цезарь","Латиница. Расшифруй слово <code>JMVIAEPP</code>, сдвиг 4.",[1883134920382657],"Сдвигай каждую букву на 4 позиции назад."],["Атбаш","Расшифруй слово <code>ЭЦОЛН</code> шифром Атбаш (русский алфавит).",[8725120367433145],"Первая буква алфавита меняется на последнюю, вторая на предпоследнюю. Смотри таблицу во вкладке «Атбаш»."],["Атбаш","Зашифруй слово ЗАЩИТА шифром Атбаш (русский алфавит, 33 буквы).",[5521232066813230],"Алфавит состоит из 33 букв: А↔Я, Б↔Ю, В↔Э и так далее."],["Атбаш","Латиница. Расшифруй слово <code>KZHHDLIW</code>.",[5118246097491528],"A↔Z, B↔Y, C↔X…"],["Атбаш","Расшифруй фразу <code>ЛОРФ ЦСКРОТЯМЦФЦ</code>.",[5254529840400471],"Пробелы не шифруются. В ответе пробелы можно не ставить."],["Виженер","Русский алфавит. Ключ ШКОЛА. Расшифруй <code>БШБРРЁПБ</code>.",[4749655423727943],"Во вкладке «Виженер» выбери кириллицу и режим «Расшифровать»."],["Виженер","Русский алфавит. Зашифруй слово ЖУРНАЛ ключом КЛАСС.",[8522530970654335],"Ключ подписывается под буквами текста: К Л А С С К. Каждую букву сдвинь на номер буквы ключа (А=0, Б=1…)."],["Виженер","Латиница. Ключ DESK. Расшифруй <code>DRLSYMJEV</code>.",[3747739810204410],"Ключ повторяется: D E S K D E S K D. Вычти номер буквы ключа из номера буквы шифртекста."],["Виженер","Открытый текст ДНЕВНИК превратился в шифртекст <code>ЗЬСЁЬХО</code>. Ключ состоит из 3 букв. Найди ключ.",[2210177980551237],"Из номера буквы шифртекста вычти номер буквы открытого текста. Так получаются буквы ключа."],["Забор","Шифр «забор», 2 рельса. Расшифруй <code>БЗПСОТЕОАНСЬ</code>.",[6467387072749658],"Первая часть шифртекста — верхняя строка зигзага, вторая — нижняя. Проверь во вкладке «Забор»."],["Забор","Зашифруй слово ПЕРЕМЕНА шифром «забор» на 3 рельса.",[7173433590169391],"Запиши буквы зигзагом по трём строкам, затем прочитай строки сверху вниз."],["Забор","Латиница, 3 рельса. Расшифруй <code>AVSANIIUUDTTRPE</code>.",[3068671288790253],"Сначала посчитай, сколько букв приходится на каждую из трёх строк зигзага."],["Простая замена (частотный анализ)","Фраза одного из героев мультсериала «Смешарики» зашифрована шифром простой замены (русский алфавит). Ключ неизвестен. Расшифруй текст и введи имя героя, которому она принадлежит.<br><code>ШЪОАИХ УБЦЖХМЛУВ, ЖЛО СМЩШ ЛМПВЙЛ УСОФ УДЮУБ. СОЛ УДЮУБ ОГЪХ, ЪХЕПШДМП, ЖЛОЫЮ С ЪМАО УДОЛПМЛР. Х ЕОПОФ УДОЛПШКР С ЪМАО, Х УДОЛПМЛР ЛХД ЪМЖМАО. ЪШЖМАО ШЪЛМПМУЪОАО. ШБШ СОЛ, ГХГОФ УДЮУБ ЦДЮСХЛРУВ ЕО ЦЛПХД? ЖЛОЫЮ ЫЮЛР ЫОИПЮД? Х ГХГОФ УДЮУБ ЫЮЛР ЕО ЦЛПХД ЫОИПЮД? ГХГОФ СООЫЩМ УДЮУБ ЫЮЛР ЕО ЦЛПХД? ЪМЕОЪВЛЪО. Ш ЪМЕОЪВЛЪО, ЛО БШ ЗШЧЪР СУМАИХ ЫЮБХ ЫМУУДЮУБМЪЪОФ, Х ЛЮ ЕПОУЛО ЪМ ЧХДМЖХБ ЭЛОАО, ЛО БШ УДЮУБ ЫЮБ, ЪО ГЦИХ-ЛО ЧХЛМПВБУВ.</code>",[5566543552558331],"Скопируй текст во вкладку «Простая замена», режим «Расшифровать». Используй диаграмму частот: самые частые буквы русского языка О, Е, А, И, Н, Т. Ищи короткие слова и слова, которые повторяются в тексте."],["Комбинация","Слово сначала зашифровали Цезарем со сдвигом 3 (русский алфавит), а затем Атбашем. Получилось <code>РНЩУО</code>. Расшифруй.",[8615740913699152],"Расшифровывать нужно в обратном порядке: сначала Атбаш, затем Цезарь назад."],["Теория","Сколько существует разных ненулевых сдвигов (ключей) у шифра Цезаря для русского алфавита из 33 букв?",[1126624211054704],"Подумай, какие сдвиги оставляют текст без изменений."],["Теория","Шифр Виженера, у которого ключ состоит из одной буквы, совпадает с другим классическим шифром. С каким?",[8231759126074825,5494874359070283,991411522700562],"Рассмотри таблицу Виженера: что происходит с ней, если ключ состоит из одной буквы."],["Теория","Слово ДОСТУП зашифровали шифром Атбаш два раза подряд. Что получилось?",[19886433062010],"Проверь на практике: зашифруй любое слово Атбашем два раза подряд во вкладке «Атбаш»."]],SALT="cr26";
+const norm=s=>s.toUpperCase().replace(/Ё/g,"Е").replace(/[^A-ZА-Я0-9]/g,"");
 const done=new Set();
 T.forEach((t,i)=>{const d=document.createElement("div");d.className="card task";
-d.innerHTML='<p style="margin:0 0 8px"><b>'+(i+1)+'.</b> '+t[0]+'</p><div class="row"><input id="a'+i+'" placeholder="Ответ"><button id="b'+i+'">Проверить</button><span class="msg" id="m'+i+'"></span></div><details class="h"><summary>Подсказка</summary>'+t[2]+'</details>';
+d.innerHTML='<p style="margin:0 0 8px"><b>'+(i+1)+'.</b> <span class="tag">'+t[0]+"</span> "+t[1]+'</p><div class="row"><input id="a'+i+'" placeholder="Ответ"><button id="b'+i+'">Проверить</button><span class="msg" id="m'+i+'"></span></div><details class="h"><summary>Подсказка</summary>'+t[3]+"</details>";
 $("tasks").appendChild(d);
-$("b"+i).onclick=()=>{const v=$("a"+i).value.toUpperCase().replace(/[\s{}]/g,""),m=$("m"+i);
-if(v===t[1]){m.textContent="✓ Верно";m.style.color="var(--ok)";d.classList.add("ok");done.add(i)}
+$("b"+i).onclick=()=>{const m=$("m"+i);
+if(t[2].includes(H(SALT+norm($("a"+i).value)))){m.textContent="✓ Верно";m.style.color="var(--ok)";d.classList.add("ok");done.add(i)}
 else{m.textContent="✗ Попробуй ещё";m.style.color="var(--bad)"}
 $("sc").textContent=done.size+" / "+T.length}});
 </script></body></html>

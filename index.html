@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Классические шифры</title>
+<title>Шифрование</title>
 <style>
 :root{--pri:#6d28d9;--dk:#5b21b6;--soft:#f3efff;--mid:#e4dbfd;--bd:#cdbdf7;--ink:#2a1f45;--ok:#15803d;--bad:#b91c1c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
@@ -73,8 +73,105 @@ details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
 .fq{display:flex;gap:8px;align-items:center;font-family:ui-monospace,monospace;margin:2px 0}.fq i{display:block;height:12px;background:var(--pri);border-radius:6px}.tag{background:var(--pri);color:#fff;border-radius:999px;padding:1px 10px;font-size:.8rem}ol{margin:4px 0 10px;padding-left:22px}
 .sg{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}.sg div{width:36px;text-align:center;background:#fff;border:1px solid var(--bd);border-radius:8px;padding:3px 2px}.sg b{display:block;font-family:ui-monospace,monospace;color:var(--dk)}.sg input{width:28px;padding:2px;text-align:center;font-family:ui-monospace,monospace;font-weight:700;border-color:var(--pri)}.sg div.u{background:var(--mid)}.sg input.bad{background:#fee2e2;border-color:var(--bad)}
 .tt{border-collapse:collapse;width:100%;background:#fff}.tt th{background:var(--pri);color:#fff;text-align:left}.tt th,.tt td{padding:7px 12px;border:1px solid var(--bd)}.tt tr:nth-child(even) td{background:var(--soft)}
+
+:root{--sh:0 4px 18px rgba(91,33,182,.10)}
+body{font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;line-height:1.65}
+header{padding:72px 20px}
+header h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(0,0,0,.3)}
+nav{background:rgba(255,255,255,.94);backdrop-filter:blur(8px);justify-content:center}
+nav a{padding:7px 16px;transition:background .15s}
+main{max-width:980px}
+h2{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;margin:52px 0 8px;display:flex;gap:12px;align-items:center;color:var(--dk)}
+h2:before{content:"";width:6px;height:1.1em;background:var(--pri);border-radius:3px}
+.lead{font-size:1.02rem}
+.card{background:#fff;box-shadow:var(--sh);border-radius:16px}
+.card h3{font-size:1.08rem}
+input,select,textarea{border:1.5px solid var(--bd);border-radius:12px;padding:9px 12px;background:#fff;transition:border-color .15s,box-shadow .15s}
+textarea{min-height:84px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(109,40,217,.18)}
+button{min-height:40px;padding:8px 20px;font-weight:600;transition:background .15s,transform .06s}
+button:hover{background:var(--dk)}button:active{transform:scale(.97)}
+button:focus-visible,.tabs button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+button.ghost{background:#fff;color:var(--pri);border:1.5px solid var(--pri)}button.ghost:hover{background:var(--soft)}
+.tabs{position:relative;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 56px)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;border-radius:12px 12px 0 0;background:var(--mid);color:var(--dk);padding:11px 22px}
+.tabs button:hover{background:#d6c6fb;color:var(--dk)}
+.tabs button.on{background:var(--pri);color:#fff;box-shadow:inset 0 3px 0 #c4b5fd}
+.panel{border-radius:0 18px 18px 18px;padding:22px;box-shadow:var(--sh)}
+.panel>p:first-child{font-size:1.02rem}
+.chips span{padding:3px 9px}.chips span b{background:var(--pri);color:#fff;border-radius:6px;padding:0 6px}
+.wheel{--s:min(300px,84vw);width:var(--s);height:var(--s)}
+.wheel b.o.u{background:var(--pri);color:#fff;border-radius:50%}
+.wheel b.i.u{background:#f59e0b}
+.ab div{width:34px}.ab div.h{background:var(--pri);color:#fff;box-shadow:0 2px 6px rgba(109,40,217,.35)}
+.vt{position:relative;max-height:min(440px,62vh);-webkit-overflow-scrolling:touch}
+.vt td{width:26px;height:26px}
+.vt tr:first-child td{position:sticky;top:0;z-index:2}
+.vt td:first-child{position:sticky;left:0;z-index:1}
+.vt tr:first-child td:first-child{z-index:3}
+.rails{display:grid;gap:5px;overflow-x:auto;padding:8px;background:#fff;border-radius:12px;margin-top:8px;font:inherit;white-space:normal}
+.rl{display:flex;gap:4px;align-items:center;min-width:max-content}
+.rl em{width:34px;font-style:normal;font-weight:700;color:var(--dk);font-size:.8rem;position:sticky;left:0;background:#fff}
+.rc{width:28px;height:28px;border-radius:7px;background:var(--soft);display:grid;place-items:center;font:700 .95rem ui-monospace,monospace;color:#fff}
+.r0 .rc.on{background:#6d28d9}.r1 .rc.on{background:#8b5cf6}.r2 .rc.on{background:#c026d3}.r3 .rc.on{background:#0891b2}.r4 .rc.on{background:#d97706}
+.fq{gap:8px}.fq b{width:22px}.fq .tr{flex:1;height:14px;background:var(--mid);border-radius:7px;overflow:hidden}
+.fq .tr i{height:100%;border-radius:0}.fq.set .tr i{background:var(--ok)}
+.fq em{font-style:normal;width:84px;text-align:right;font-size:.82rem;color:#6b5f8a}
+.prog{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:12px 16px;box-shadow:var(--sh);margin:12px 0 16px}
+@media(min-width:700px){.prog{position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:4}}
+.pr-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--pri)}
+.pbar{height:10px;background:var(--mid);border-radius:6px;margin:8px 0;overflow:hidden}
+.pbar div{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#6d28d9);transition:width .4s}
+.cn{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 4px}
+.chip{flex:0 0 auto;width:34px;height:34px;min-height:0;padding:0;border-radius:50%;background:#fff;color:var(--pri);border:1.5px solid var(--bd)}
+.chip:hover{background:var(--soft)}
+.chip.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.chip.cur{border-color:var(--pri);box-shadow:0 0 0 3px rgba(109,40,217,.28)}
+.task{background:#fff;border:1.5px solid var(--bd);border-left:6px solid var(--bd);border-radius:16px;padding:16px 18px;margin:14px 0;box-shadow:var(--sh);scroll-margin-top:150px;transition:border-color .2s,box-shadow .2s}
+.task.cur{border-color:var(--pri);border-left-color:var(--pri);box-shadow:0 8px 28px rgba(109,40,217,.22)}
+.task.ok{background:#f0fdf4;border-color:#86efac;border-left-color:var(--ok)}
+.th{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.nm{width:34px;height:34px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:800}
+.task.ok .nm{background:var(--ok)}
+.badge{margin-left:auto;font-size:.82rem;font-weight:700;color:var(--pri)}.task.ok .badge{color:var(--ok)}
+.tx{margin:0 0 10px}
+details.hint{margin-top:10px}
+details.hint summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;color:var(--pri);font-weight:600;padding:6px 14px;border-radius:999px;background:var(--soft);user-select:none}
+details.hint summary::-webkit-details-marker{display:none}
+details.hint summary:hover{background:var(--mid)}
+details.hint .s2,details.hint[open] .s1{display:none}details.hint[open] .s2{display:inline}
+details.hint>div{margin-top:8px;padding:10px 14px;background:var(--soft);border-left:4px solid var(--pri);border-radius:8px}
+@media(max-width:640px){main{padding:8px 12px 40px}.panel{padding:14px;border-radius:0 14px 14px 14px}.tabs button{padding:10px 15px;font-size:.93rem}nav{justify-content:flex-start}header{padding:52px 16px}.row>input:not([type=number]){flex:1 1 140px}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes win{0%{box-shadow:0 0 0 0 rgba(21,128,61,.5)}100%{box-shadow:0 0 0 18px rgba(21,128,61,0)}}
+@keyframes flash{0%{background:#ddd0fb}100%{background:#fff}}
+header h1{animation:fadeUp .8s ease both}
+.panel.on{animation:panelIn .3s ease}
+.tabs button{transition:background .2s,color .2s,transform .15s}.tabs button:hover{transform:translateY(-2px)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,box-shadow .2s}
+.rv.in{opacity:1;transform:none}
+.grid .card.rv.in:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(91,33,182,.18)}
+button:hover{transform:translateY(-1px)}button:active{transform:scale(.97)}
+.out.flash{animation:flash .45s ease}
+.chips span{animation:pop .28s ease both}
+.vt td.hx{animation:pop .35s ease}
+.ab div{transition:background .2s,color .2s,transform .2s}.ab div.h{transform:translateY(-2px)}
+.rc.on{animation:pop .3s ease both}
+.fq .tr i{transition:width .4s ease}
+.task{animation:fadeUp .45s ease both}
+.task.win{animation:win .7s ease}
+.chip{transition:background .2s,box-shadow .2s,transform .15s}.chip:hover{transform:scale(1.12)}.chip.ok{animation:pop .35s ease}
+.row.shake{animation:shake .35s ease}
+details.hint[open]>div{animation:fadeUp .25s ease}
+.msg{transition:color .2s}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style></head><body>
-<header><h1>Классические шифры</h1></header>
+<header><h1>Шифрование</h1></header>
 <nav><a href="#th">Теория</a><a href="#c">Шифры</a><a href="#t">Задания</a></nav>
 <main>
 <h2 id="th">Теория</h2>
@@ -123,7 +220,7 @@ details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
 <div class="row"><select id="f-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
 <label>Рельсов: <select id="f-n"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label></div>
 <textarea id="f-in">WE ARE DISCOVERED</textarea>
-<div class="rail" id="f-vis"></div><div class="out" id="f-out"></div></div>
+<div class="rails" id="f-vis"></div><div class="out" id="f-out"></div></div>
 
 <div class="panel" id="p5">
 <p><b>Шифр простой замены:</b> каждая буква алфавита заменяется другой по таблице, а ключом служит перестановка алфавита. Вариантов ключа 26! ≈ 4·10²⁶, поэтому перебором его не вскрыть, но частотный анализ справляется.</p>
@@ -139,13 +236,21 @@ details.h{margin-top:6px;color:#6b5f8a;font-size:.92rem}
 <p style="margin:12px 0 4px"><b>Частота букв в тексте (топ-8):</b></p><div id="s-fq"></div></div>
 
 <h2 id="t">Задания</h2>
-<p class="lead">Ответ вводится без пробелов, регистр не важен. Решено: <span class="sc" id="sc">0 / 20</span></p>
+<p class="lead">Ответ вводится без пробелов, регистр не важен. Для проверки нажми Enter.</p>
+<div class="prog"><div class="pr-top"><b id="sc">Решено: 0 / 20</b><button id="nx" class="ghost">К следующему нерешённому</button></div><div class="pbar"><div id="pbf"></div></div><div class="cn" id="cn"></div></div>
 <div id="tasks"></div>
 </main>
 <script>
 const $=id=>document.getElementById(id);
 const AL={en:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",ru:"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"},LA=AL.en;
-document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tabs button,.panel").forEach(e=>e.classList.remove("on"));b.classList.add("on");$(b.dataset.t).classList.add("on")});
+const tabs=[...document.querySelectorAll("#tabs button")];$("tabs").setAttribute("role","tablist");
+function pick(b,focus,scroll){tabs.forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-selected",on);x.tabIndex=on?0:-1;$(x.dataset.t).classList.toggle("on",on)});
+$("tabs").scrollTo({left:b.offsetLeft-($("tabs").clientWidth-b.offsetWidth)/2,behavior:"smooth"});if(focus)b.focus();
+if(scroll&&innerWidth<700)setTimeout(()=>$("tabs").scrollIntoView({behavior:"smooth",block:"start"}),60)}
+tabs.forEach(b=>{const p=$(b.dataset.t);b.id="tb-"+p.id;b.setAttribute("role","tab");b.setAttribute("aria-controls",p.id);p.setAttribute("role","tabpanel");p.setAttribute("aria-labelledby",b.id);
+b.onclick=()=>pick(b,false,true);
+b.onkeydown=e=>{const i=tabs.indexOf(b),n=tabs.length;let j=-1;if(e.key==="ArrowRight")j=(i+1)%n;else if(e.key==="ArrowLeft")j=(i-1+n)%n;else if(e.key==="Home")j=0;else if(e.key==="End")j=n-1;if(j>=0){e.preventDefault();pick(tabs[j],true,true)}}});
+pick(tabs[0],false,false);
 const map=(t,A,f)=>[...t].map(ch=>{const i=A.indexOf(ch.toUpperCase());return i<0?ch:A[f(i,A.length)]}).join("");
 const chips=(id,l)=>$(id).innerHTML=l.slice(0,16).map(x=>"<span>"+x+"</span>").join("");
 function caesar(){const A=AL[$("c-al").value],n=A.length,s=(parseInt($("c-sh").value)||0)*+$("c-md").value,m=x=>((x%n)+n)%n,st=[];
@@ -154,7 +259,7 @@ $("c-sh").max=n-1;$("c-out").textContent=map($("c-in").value,A,i=>m(i+s));
 [...$("c-in").value.toUpperCase()].forEach(c=>{const i=A.indexOf(c);if(i>=0)st.push(c+"("+i+") "+(s<0?"−":"+")+Math.abs(s)+" = <b>"+A[m(i+s)]+"</b>("+m(i+s)+")")});
 chips("c-ch",st);
 $("c-st").innerHTML="<div>"+A+'</div><div class="b">'+[...A].map((_,i)=>A[m(i+s)]).join("")+"</div>";
-let w="";[...A].forEach((c,i)=>{const a=360/n*i;w+='<b style="transform:rotate('+a+"deg) translateY(-122px) rotate(-"+a+'deg)">'+c+'</b><b class="i" style="transform:rotate('+a+"deg) translateY(-86px) rotate(-"+a+'deg)">'+A[m(i+s)]+"</b>"});
+const us=new Set([...$("c-in").value.toUpperCase()]);let w="";[...A].forEach((c,i)=>{const a=360/n*i,u=us.has(c)?" u":"";w+='<b class="o'+u+'" style="transform:rotate('+a+'deg) translateY(calc(var(--s)*-.43)) rotate(-'+a+'deg)">'+c+'</b><b class="i'+u+'" style="transform:rotate('+a+'deg) translateY(calc(var(--s)*-.30)) rotate(-'+a+'deg)">'+A[m(i+s)]+"</b>"});
 $("c-wh").innerHTML=w}
 function atbash(){const A=AL[$("a-al").value],n=A.length,t=$("a-in").value.toUpperCase(),st=[];
 $("a-out").textContent=map($("a-in").value,A,(i,n)=>n-1-i);
@@ -171,13 +276,14 @@ for(const ch of $("v-in").value){const i=A.indexOf(ch.toUpperCase());if(i<0||!ke
 const k=A.indexOf(key[ki++%key.length]),r=((i+d*k)%n+n)%n,p=d>0?i:r;o+=A[r];
 cells[k+1][p+1].classList.add("hx");cells[k+1][0].classList.add("hr");cells[0][p+1].classList.add("hc");
 st.push(A[i]+"("+i+") "+(d>0?"+":"−")+" "+A[k]+"("+k+") = <b>"+A[r]+"</b>("+r+")")}
-$("v-out").textContent=o;chips("v-ch",st)}
+$("v-out").textContent=o;chips("v-ch",st);const hx=$("v-tab").querySelector(".hx"),vc=$("v-tab");if(hx)vc.scrollTo({left:Math.max(0,hx.offsetLeft-vc.clientWidth/2),top:Math.max(0,hx.offsetTop-vc.clientHeight/2),behavior:"smooth"})}
 function fence(){const d=+$("f-md").value,n=+$("f-n").value,t=$("f-in").value.toUpperCase().replace(/[^A-ZА-ЯЁ]/g,""),L=t.length;
 const rl=[];for(let i=0,r=0,s=1;i<L;i++){rl.push(r);if(r===0)s=1;else if(r===n-1)s=-1;r+=s}
 const ord=[...rl.keys()].sort((a,b)=>rl[a]-rl[b]||a-b);let plain=[];
 if(d>0){$("f-out").textContent=ord.map(i=>t[i]).join("");plain=[...t]}
 else{ord.forEach((p,j)=>plain[p]=t[j]);$("f-out").textContent=plain.join("")}
-let v="";for(let r=0;r<n;r++)v+=plain.map((c,i)=>rl[i]===r?c:"·").join(" ")+"\n";$("f-vis").textContent=v.trim()||"—"}
+let v="";for(let r=0;r<n;r++)v+='<div class="rl r'+r+'"><em>Р'+(r+1)+"</em>"+plain.map((c,i)=>'<span class="rc'+(rl[i]===r?" on":"")+'">'+(rl[i]===r?c:"")+"</span>").join("")+"</div>";
+$("f-vis").innerHTML=L?v:"—"}
 ["c-al","c-md","c-sh","c-in"].forEach(i=>$(i).addEventListener("input",caesar));
 ["a-al","a-in"].forEach(i=>$(i).addEventListener("input",atbash));
 ["v-al","v-md","v-key","v-in"].forEach(i=>$(i).addEventListener("input",vig));
@@ -197,7 +303,8 @@ ins.forEach((e,i)=>{e.classList.toggle("bad",dv.has(e.value)||(!!e.value&&!A.inc
 $("s-err").textContent=dv.size?"Одна и та же буква вписана в таблицу несколько раз.":"";
 const cnt={};[...t.toUpperCase()].forEach(c=>{if(A.includes(c))cnt[c]=(cnt[c]||0)+1});
 const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,8),mx=top.length?top[0][1]:1;
-$("s-fq").innerHTML=top.map(([c,v])=>'<div class="fq"><b>'+c+'</b><i style="width:'+v/mx*180+'px"></i>'+v+"</div>").join("");
+const tot=Object.values(cnt).reduce((x,y)=>x+y,0)||1;
+$("s-fq").innerHTML=top.map(([c,v])=>'<div class="fq'+(d<0&&K.includes(c)?" set":"")+'"><b>'+c+'</b><span class="tr"><i style="width:'+v/mx*100+'%"></i></span><em>'+v+" · "+Math.round(v/tot*100)+"%</em></div>").join("")+'<p style="font-size:.85rem;color:#6b5f8a;margin:6px 0 0">Зелёным отмечены буквы шифртекста, для которых замена уже вписана в таблицу.</p>';
 const st=[];
 $("s-out").textContent=[...t].map(ch=>{const u=ch.toUpperCase();if(!A.includes(u))return ch;
 const r=d>0?(K[A.indexOf(u)]||"_"):(K.indexOf(u)>=0?A[K.indexOf(u)]:"_");st.push(u+" → <b>"+r+"</b>");return r}).join("");
@@ -213,12 +320,26 @@ h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math
 
 const T=[["Цезарь","Расшифруй слово <code>ТГУСОЯ</code>. Русский алфавит (33 буквы, с Ё), сдвиг 3.",[7474384029329285],"Замени каждую букву на ту, что стоит на 3 позиции раньше. Проверь во вкладке «Цезарь», выбрав кириллицу."],["Цезарь","Зашифруй слово ШКОЛА шифром Цезаря со сдвигом 5 (русский алфавит, 33 буквы).",[7370366625410426],"Сдвигай каждую букву на 5 позиций вперёд по русскому алфавиту."],["Цезарь","Сдвиг неизвестен. Расшифруй слово <code>ЫПЯПФЙ</code> (русский алфавит).",[2804244243608439],"Вариантов 32. Перебирай сдвиги во вкладке «Цезарь», пока не появится осмысленное слово."],["Цезарь","Латиница. Расшифруй слово <code>JMVIAEPP</code>, сдвиг 4.",[1883134920382657],"Сдвигай каждую букву на 4 позиции назад."],["Атбаш","Расшифруй слово <code>ЭЦОЛН</code> шифром Атбаш (русский алфавит).",[8725120367433145],"Первая буква алфавита меняется на последнюю, вторая на предпоследнюю. Смотри таблицу во вкладке «Атбаш»."],["Атбаш","Зашифруй слово ЗАЩИТА шифром Атбаш (русский алфавит, 33 буквы).",[5521232066813230],"Алфавит состоит из 33 букв: А↔Я, Б↔Ю, В↔Э и так далее."],["Атбаш","Латиница. Расшифруй слово <code>KZHHDLIW</code>.",[5118246097491528],"A↔Z, B↔Y, C↔X…"],["Атбаш","Расшифруй фразу <code>ЛОРФ ЦСКРОТЯМЦФЦ</code>.",[5254529840400471],"Пробелы не шифруются. В ответе пробелы можно не ставить."],["Виженер","Русский алфавит. Ключ ШКОЛА. Расшифруй <code>БШБРРЁПБ</code>.",[4749655423727943],"Во вкладке «Виженер» выбери кириллицу и режим «Расшифровать»."],["Виженер","Русский алфавит. Зашифруй слово ЖУРНАЛ ключом КЛАСС.",[8522530970654335],"Ключ подписывается под буквами текста: К Л А С С К. Каждую букву сдвинь на номер буквы ключа (А=0, Б=1…)."],["Виженер","Латиница. Ключ DESK. Расшифруй <code>DRLSYMJEV</code>.",[3747739810204410],"Ключ повторяется: D E S K D E S K D. Вычти номер буквы ключа из номера буквы шифртекста."],["Виженер","Открытый текст ДНЕВНИК превратился в шифртекст <code>ЗЬСЁЬХО</code>. Ключ состоит из 3 букв. Найди ключ.",[2210177980551237],"Из номера буквы шифртекста вычти номер буквы открытого текста. Так получаются буквы ключа."],["Забор","Шифр «забор», 2 рельса. Расшифруй <code>БЗПСОТЕОАНСЬ</code>.",[6467387072749658],"Первая часть шифртекста — верхняя строка зигзага, вторая — нижняя. Проверь во вкладке «Забор»."],["Забор","Зашифруй слово ПЕРЕМЕНА шифром «забор» на 3 рельса.",[7173433590169391],"Запиши буквы зигзагом по трём строкам, затем прочитай строки сверху вниз."],["Забор","Латиница, 3 рельса. Расшифруй <code>AVSANIIUUDTTRPE</code>.",[3068671288790253],"Сначала посчитай, сколько букв приходится на каждую из трёх строк зигзага."],["Простая замена (частотный анализ)","Фраза одного из героев мультсериала «Смешарики» зашифрована шифром простой замены (русский алфавит). Ключ неизвестен. Расшифруй текст и введи имя героя, которому она принадлежит.<br><code>ШЪОАИХ УБЦЖХМЛУВ, ЖЛО СМЩШ ЛМПВЙЛ УСОФ УДЮУБ. СОЛ УДЮУБ ОГЪХ, ЪХЕПШДМП, ЖЛОЫЮ С ЪМАО УДОЛПМЛР. Х ЕОПОФ УДОЛПШКР С ЪМАО, Х УДОЛПМЛР ЛХД ЪМЖМАО. ЪШЖМАО ШЪЛМПМУЪОАО. ШБШ СОЛ, ГХГОФ УДЮУБ ЦДЮСХЛРУВ ЕО ЦЛПХД? ЖЛОЫЮ ЫЮЛР ЫОИПЮД? Х ГХГОФ УДЮУБ ЫЮЛР ЕО ЦЛПХД ЫОИПЮД? ГХГОФ СООЫЩМ УДЮУБ ЫЮЛР ЕО ЦЛПХД? ЪМЕОЪВЛЪО. Ш ЪМЕОЪВЛЪО, ЛО БШ ЗШЧЪР СУМАИХ ЫЮБХ ЫМУУДЮУБМЪЪОФ, Х ЛЮ ЕПОУЛО ЪМ ЧХДМЖХБ ЭЛОАО, ЛО БШ УДЮУБ ЫЮБ, ЪО ГЦИХ-ЛО ЧХЛМПВБУВ.</code>",[5566543552558331],"Скопируй текст во вкладку «Простая замена», режим «Расшифровать». Используй диаграмму частот: самые частые буквы русского языка О, Е, А, И, Н, Т. Ищи короткие слова и слова, которые повторяются в тексте."],["Комбинация","Слово сначала зашифровали Цезарем со сдвигом 3 (русский алфавит), а затем Атбашем. Получилось <code>РНЩУО</code>. Расшифруй.",[8615740913699152],"Расшифровывать нужно в обратном порядке: сначала Атбаш, затем Цезарь назад."],["Виженер","Русский алфавит. Ключ БАЙТ. Расшифруй <code>ЛЛЙФЙАЬЁСА</code>.",[8503450622661947],"Ключ повторяется: Б А Й Т Б А Й Т Б А. Вычти номер буквы ключа из номера буквы шифртекста (А=0, Б=1…) или используй вкладку «Виженер»."],["Цезарь","Зашифруй слово ИНФОРМАТИКА шифром Цезаря со сдвигом 8 (русский алфавит, 33 буквы).",[3992619975173886],"Сдвигай каждую букву на 8 позиций вперёд по русскому алфавиту."],["Забор","Русский текст, 4 рельса. Расшифруй <code>КЕЬОДНЛНЬНИЦАОТФИС</code>.",[6586774894695377],"Зигзаг идёт вниз до четвёртой строки и обратно вверх. Вкладка «Забор» поддерживает от 2 до 5 рельсов."]],SALT="cr26";
 const norm=s=>s.toUpperCase().replace(/Ё/g,"Е").replace(/[^A-ZА-Я0-9]/g,"");
-const done=new Set();
-T.forEach((t,i)=>{const d=document.createElement("div");d.className="card task";
-d.innerHTML='<p style="margin:0 0 8px"><b>'+(i+1)+'.</b> <span class="tag">'+t[0]+"</span> "+t[1]+'</p><div class="row"><input id="a'+i+'" placeholder="Ответ"><button id="b'+i+'">Проверить</button><span class="msg" id="m'+i+'"></span></div><details class="h"><summary>Подсказка</summary>'+t[3]+"</details>";
-$("tasks").appendChild(d);
-$("b"+i).onclick=()=>{const m=$("m"+i);
-if(t[2].includes(H(SALT+norm($("a"+i).value)))){m.textContent="✓ Верно";m.style.color="var(--ok)";d.classList.add("ok");done.add(i)}
-else{m.textContent="✗ Попробуй ещё";m.style.color="var(--bad)"}
-$("sc").textContent=done.size+" / "+T.length}});
+const done=new Set();let cur=0;const cards=[],cps=[];
+const nextUn=f=>{for(let k=1;k<=T.length;k++){const j=(f+k)%T.length;if(!done.has(j))return j}return -1};
+function upd(){$("sc").textContent="Решено: "+done.size+" / "+T.length;$("pbf").style.width=done.size/T.length*100+"%";
+cards.forEach((c,i)=>{c.classList.toggle("ok",done.has(i));c.classList.toggle("cur",i===cur&&!done.has(i));c.querySelector(".badge").textContent=done.has(i)?"Решено ✓":(i===cur?"Текущее задание":"")});
+cps.forEach((c,i)=>{c.classList.toggle("ok",done.has(i));c.classList.toggle("cur",i===cur)})}
+function go(i){cur=i;upd();cards[i].scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>cards[i].querySelector("input").focus({preventScroll:true}),350)}
+T.forEach((t,i)=>{const d=document.createElement("div");d.className="task";
+d.innerHTML='<div class="th"><span class="nm">'+(i+1)+'</span><span class="tag">'+t[0]+'</span><span class="badge"></span></div><p class="tx">'+t[1]+'</p><div class="row"><input id="a'+i+'" placeholder="Ответ" autocomplete="off"><button id="b'+i+'">Проверить</button><span class="msg" id="m'+i+'"></span></div><details class="hint"><summary><span class="s1">Показать подсказку</span><span class="s2">Скрыть подсказку</span></summary><div>'+t[3]+"</div></details>";
+$("tasks").appendChild(d);cards.push(d);
+const inp=d.querySelector("input"),m=$("m"+i);
+inp.addEventListener("focus",()=>{if(cur!==i){cur=i;upd()}});
+inp.addEventListener("input",()=>{m.textContent=""});
+inp.addEventListener("keydown",e=>{if(e.key==="Enter")$("b"+i).click()});
+$("b"+i).onclick=()=>{if(t[2].includes(H(SALT+norm(inp.value)))){m.textContent="✓ Верно";m.style.color="var(--ok)";done.add(i);d.classList.remove("win");void d.offsetWidth;d.classList.add("win");const n=nextUn(i);if(n>=0)cur=n;upd()}else{m.textContent="✗ Попробуй ещё";m.style.color="var(--bad)";const rw=inp.parentNode;rw.classList.remove("shake");void rw.offsetWidth;rw.classList.add("shake")}};
+const c=document.createElement("button");c.className="chip";c.textContent=i+1;c.title="Задание "+(i+1);c.onclick=()=>go(i);$("cn").appendChild(c);cps.push(c)});
+$("nx").onclick=()=>{const n=nextUn(cur);if(n<0){$("sc").textContent="Все задания решены!";return}go(n)};
+upd();
+
+const mo=new MutationObserver(l=>l.forEach(r=>{const e=r.target.nodeType===1?r.target:r.target.parentElement;if(e&&e.classList){e.classList.remove("flash");void e.offsetWidth;e.classList.add("flash")}}));
+document.querySelectorAll(".out").forEach(e=>mo.observe(e,{childList:true,characterData:true,subtree:true}));
+if("IntersectionObserver"in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll("main h2,.grid .card,.tt,.prog,.tabs").forEach(e=>{e.classList.add("rv");io.observe(e)})}
 </script></body></html>

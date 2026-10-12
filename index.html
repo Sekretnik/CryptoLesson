@@ -170,32 +170,54 @@ button:hover{transform:translateY(-1px)}button:active{transform:scale(.97)}
 details.hint[open]>div{animation:fadeUp .25s ease}
 .msg{transition:color .2s}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+.hb{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px 18px;margin:12px 0}
+.hb h3{margin:0 0 6px;color:var(--pri);font-size:1.12rem}.hb p{margin:6px 0}
+.hb ol,.hb ul{margin:6px 0;padding-left:22px}.hb li{margin:5px 0}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.hgrid .hb{margin:0}
+.hvis{position:relative;overflow-x:auto;padding:8px 2px;margin:8px 0}
+.hr{display:flex;gap:3px;margin:3px 0;min-width:max-content;align-items:center}
+.hr .lb{width:74px;flex:none;font-size:.8rem;color:#6b5f8a;position:sticky;left:0;background:#fff}
+.hc{width:30px;height:32px;display:grid;place-items:center;border:1px solid var(--bd);border-radius:7px;font:600 1rem ui-monospace,monospace;background:#fff}
+.hc.s{background:#f59e0b;color:#fff;border-color:#f59e0b}.hc.p{background:var(--mid)}.hc.e{background:var(--pri);color:#fff;border-color:var(--pri)}
+.hres{font:700 1.5rem ui-monospace,monospace;letter-spacing:.12em;color:var(--dk);background:var(--soft);border-radius:10px;padding:8px 14px;margin:8px 0;min-height:52px;word-break:break-all}
+.htxt{font-size:1.08rem;margin:8px 0;min-height:3.4em}
+.hcnt{font-weight:700;color:var(--pri)}.hmsg{font-weight:600}
+.hsol{display:none;margin-top:8px;padding:10px 14px;background:var(--soft);border-left:4px solid var(--pri);border-radius:8px}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+button.ghost.hm.on{background:var(--pri);color:#fff}
+.rl .rc.on.dot{background:var(--mid);color:var(--pri)}
 </style></head><body>
 <header><h1>Шифрование</h1></header>
-<nav><a href="#th">Теория</a><a href="#c">Шифры</a><a href="#t">Задания</a></nav>
+<nav><a href="#th">Теория</a><a href="#how">Как решить</a><a href="#c">Шифры</a><a href="#t">Задания</a></nav>
 <main>
 <h2 id="th">Теория</h2>
 <div class="grid">
-<div class="card"><h3>Шифрование</h3><p>Преобразование сообщения так, чтобы прочитать его мог только тот, кто знает секрет. Наука о создании шифров называется криптографией, а о их вскрытии — криптоанализом.</p></div>
-<div class="card"><h3>Основные термины</h3><p><b>Открытый текст</b> — исходное сообщение, <b>шифртекст</b> — результат шифрования, <b>алгоритм</b> — правило преобразования, <b>ключ</b> — секретный параметр (сдвиг, слово, таблица).</p></div>
-<div class="card"><h3>Замена и перестановка</h3><p>В шифрах замены буквы заменяются другими (Цезарь, Атбаш, Виженер, простая замена). В шифрах перестановки буквы остаются прежними, но меняются местами («забор»).</p></div>
-<div class="card"><h3>Принцип Керкгоффса</h3><p>Стойкость шифра должна зависеть только от секретности ключа, а не от секретности алгоритма. Алгоритм считается известным противнику.</p></div>
-<div class="card"><h3>Как вскрывают шифры</h3><p><b>Перебор ключей:</b> работает, если ключей мало. <b>Частотный анализ:</b> в языке одни буквы встречаются чаще других (в русском О, Е, А, И, Н, Т), и по частоте можно угадать замену.</p></div>
-<div class="card"><h3>Моно- и полиалфавитные шифры</h3><p>В моноалфавитных шифрах одна буква всегда заменяется одной и той же. В полиалфавитных (Виженер) одна и та же буква шифруется по-разному, поэтому простой частотный анализ слабее.</p></div>
+<div class="card"><h3>Что такое шифрование</h3><p>Это способ спрятать сообщение так, чтобы его понял только тот, кто знает секрет. Наука о шифрах называется криптографией.</p></div>
+<div class="card"><h3>Главные слова</h3><p><b>Открытый текст</b> — сообщение до шифрования. <b>Шифртекст</b> — после. <b>Ключ</b> — секрет: число, слово или таблица. <b>Алгоритм</b> — правила превращения текста.</p></div>
+<div class="card"><h3>Два способа спрятать текст</h3><p><b>Замена:</b> буквы меняются на другие (Цезарь, Атбаш, Виженер, простая замена). <b>Перестановка:</b> буквы те же, но стоят в другом порядке («забор»).</p></div>
+<div class="card"><h3>Секрет в ключе</h3><p>Хороший шифр безопасен, даже если все знают правила. Нужно только не знать ключ. Так же работает замок: его устройство известно, но без ключа дверь не откроется.</p></div>
+<div class="card"><h3>Как взламывают шифры</h3><p><b>Перебор:</b> пробуем все ключи подряд. Это работает, если ключей мало, как у Цезаря. <b>Частотный анализ:</b> одни буквы встречаются чаще других (в русском О, Е, А, И, Н, Т), по этому можно угадать замену.</p></div>
+<div class="card"><h3>Один алфавит или несколько</h3><p>В Цезаре, Атбаше и простой замене буква всегда меняется одинаково. В Виженере одна и та же буква может превратиться в разные, поэтому такой шифр разгадать труднее.</p></div>
 </div>
-<div style="overflow-x:auto;margin-top:12px"><table class="tt"><tr><th>Шифр</th><th>Тип</th><th>Ключ</th></tr>
-<tr><td>Цезарь</td><td>замена, моноалфавитный</td><td>сдвиг (число)</td></tr>
-<tr><td>Атбаш</td><td>замена, моноалфавитный</td><td>нет, алфавит зеркально</td></tr>
-<tr><td>Виженер</td><td>замена, полиалфавитный</td><td>слово</td></tr>
-<tr><td>Забор</td><td>перестановка</td><td>число рельсов</td></tr>
-<tr><td>Простая замена</td><td>замена, моноалфавитный</td><td>таблица замен</td></tr></table></div>
+<div style="overflow-x:auto;margin-top:12px"><table class="tt"><tr><th>Шифр</th><th>Что делаем</th><th>Ключ</th></tr>
+<tr><td>Цезарь</td><td>сдвигаем буквы по алфавиту</td><td>число</td></tr>
+<tr><td>Атбаш</td><td>переворачиваем алфавит</td><td>не нужен</td></tr>
+<tr><td>Виженер</td><td>сдвигаем каждую букву на свой шаг</td><td>слово</td></tr>
+<tr><td>Забор</td><td>пишем зигзагом, читаем по строкам</td><td>число рельсов</td></tr>
+<tr><td>Простая замена</td><td>меняем буквы по таблице</td><td>таблица</td></tr></table></div>
+
+<h2 id="how">Как решить шифр?</h2>
+<p class="lead">Выбери шифр и пройди разбор по шагам. Потом попробуй решить пример сам: ответ появится только после твоей попытки.</p>
+<div class="tabs" id="htabs"></div>
+<div id="hpanels"></div>
 
 <h2 id="c">Шифры</h2>
 <p class="lead">Выбери шифр, введи текст и смотри, как он работает. Символы вне алфавита остаются как есть.</p>
 <div class="tabs" id="tabs"><button class="on" data-t="p1">Цезарь</button><button data-t="p2">Атбаш</button><button data-t="p3">Виженер</button><button data-t="p4">Забор</button><button data-t="p5">Простая замена</button></div>
 
 <div class="panel on" id="p1">
-<p><b>Шифр Цезаря:</b> каждая буква сдвигается на одно и то же число позиций. Количество ключей равно числу букв алфавита: 26 для латиницы и 33 для кириллицы. Сдвиг 0 оставляет текст без изменений, поэтому реально шифруют 25 вариантов для латиницы и 32 для кириллицы. Так мало ключей, что шифр вскрывается простым перебором.</p>
+<p><b>Шифр Цезаря:</b> каждая буква сдвигается по алфавиту на одно и то же число шагов. Это число — ключ. Ключей столько, сколько букв в алфавите: 26 в латинице и 33 в русском. Сдвиг 0 ничего не меняет, поэтому рабочих вариантов 25 и 32. Это очень мало, поэтому шифр легко взломать перебором.</p>
 <div class="row"><select id="c-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select>
 <select id="c-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
 <label>Сдвиг: <input type="number" id="c-sh" min="1" max="25" value="3" style="width:80px"></label></div>
@@ -203,31 +225,29 @@ details.hint[open]>div{animation:fadeUp .25s ease}
 <div class="wheel" id="c-wh"></div><div class="strip" id="c-st"></div><div class="chips" id="c-ch"></div><div class="out" id="c-out"></div></div>
 
 <div class="panel" id="p2">
-<p><b>Атбаш:</b> алфавит записан наоборот, первая буква меняется на последнюю, вторая на предпоследнюю и т. д. Ключа нет, а шифрование и расшифровка выполняются одинаково. Буквы из твоего текста подсвечены в таблице.</p>
+<p><b>Шифр Атбаш:</b> алфавит «переворачивают»: первая буква меняется на последнюю, вторая на предпоследнюю и так далее. Ключ не нужен. Шифровать и расшифровывать можно одним и тем же действием. Буквы из твоего текста подсвечены в таблице.</p>
 <div class="row"><select id="a-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select></div>
 <textarea id="a-in">HELLO WORLD</textarea>
 <div class="ab" id="a-grid"></div><div class="chips" id="a-ch"></div><div class="out" id="a-out"></div></div>
 
 <div class="panel" id="p3">
-<p><b>Шифр Виженера:</b> ключевое слово повторяется под текстом. Буква текста ищется в верхней строке таблицы, буква ключа в левом столбце, а на их пересечении (оранжевая клетка) стоит буква шифртекста. Работает с латиницей и кириллицей.</p>
+<p><b>Шифр Виженера:</b> похож на Цезаря, но для каждой буквы сдвиг свой. Сдвиг берётся из ключевого слова, которое повторяется под текстом. Найди в таблице строку буквы ключа и столбец буквы текста: на пересечении (оранжевая клетка) стоит буква шифртекста.</p>
 <div class="row"><select id="v-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select><select id="v-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
 <input id="v-key" value="LEMON" placeholder="Ключ"></div>
 <textarea id="v-in">ATTACK AT DAWN</textarea>
 <div class="chips" id="v-ch"></div><div class="out" id="v-out"></div><div class="vt" id="v-tab"></div></div>
 
 <div class="panel" id="p4">
-<p><b>Шифр «забор»:</b> текст пишется зигзагом на нескольких «рельсах», а затем строки читаются одна за другой. Буквы не меняются, а только переставляются. Работает с латиницей и кириллицей, пробелы убираются.</p>
+<p><b>Шифр «забор»:</b> буквы остаются теми же, но меняются местами. Текст пишут зигзагом на нескольких строках («рельсах»), а потом читают строку за строкой. Ключ — число рельсов. Работает с латиницей и кириллицей, пробелы убираются.</p>
 <div class="row"><select id="f-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select>
 <label>Рельсов: <select id="f-n"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label></div>
 <textarea id="f-in">WE ARE DISCOVERED</textarea>
 <div class="rails" id="f-vis"></div><div class="out" id="f-out"></div></div>
 
 <div class="panel" id="p5">
-<p><b>Шифр простой замены:</b> каждая буква алфавита заменяется другой по таблице, а ключом служит перестановка алфавита. Вариантов ключа 26! ≈ 4·10²⁶, поэтому перебором его не вскрыть, но частотный анализ справляется.</p>
-<p><b>Расшифровка с ключом:</b></p>
-<ol><li>Запиши таблицу: сверху обычный алфавит, снизу шифралфавит.</li><li>Поменяй строки местами: получится обратная таблица.</li><li>Каждую букву шифртекста найди в верхней строке обратной таблицы и замени на букву под ней.</li><li>Пробелы и знаки препинания оставь без изменений.</li></ol>
-<p><b>Вскрытие без ключа (частотный анализ):</b></p>
-<ol><li>Посчитай, сколько раз встречается каждая буква шифртекста (диаграмма ниже делает это автоматически).</li><li>Сопоставь самые частые буквы с частыми буквами языка: в русском О, Е, А, И, Н, Т, в английском E, T, A, O, I, N.</li><li>Найди короткие слова («и», «в», «на», «the», «and») и проверь догадки.</li><li>Подставляй найденные буквы и уточняй остальные по смыслу слов.</li></ol>
+<p><b>Шифр простой замены:</b> каждая буква заменяется другой по таблице. Таблица и есть ключ. Одна и та же буква всегда заменяется одинаково. Вариантов таблиц очень много, поэтому их не перебирают, а разгадывают по частоте букв.</p>
+<p><b>Как расшифровать, если есть таблица:</b></p><ol><li>Найди букву шифртекста в нижней строке таблицы.</li><li>Возьми букву над ней: это буква сообщения.</li><li>Повтори для всех букв. Пробелы и знаки не меняй.</li></ol>
+<p><b>Как расшифровать без таблицы (по частоте):</b></p><ol><li>Посчитай, сколько раз встречается каждая буква (диаграмма ниже сделает это за тебя).</li><li>Самые частые буквы шифртекста, скорее всего, О, Е, А, И, Н, Т.</li><li>Найди короткие слова вроде «И», «В», «НА» и проверь догадки.</li><li>Вписывай найденные буквы в таблицу и угадывай остальные слова.</li></ol>
 <div class="row"><select id="s-al"><option value="en">Латиница</option><option value="ru">Кириллица</option></select><select id="s-md"><option value="1">Шифровать</option><option value="-1">Расшифровать</option></select><button id="s-rnd">Случайный ключ</button><button id="s-def">Пример ключа</button><button id="s-clr">Очистить таблицу</button></div>
 <div class="row"><div style="width:100%"><div style="font-size:.9rem;color:#6b5f8a">Верхняя буква — открытая, в поле под ней впиши её замену. Пустые поля в тексте показываются как «_».</div><div class="sg" id="s-tab"></div></div></div>
 <div id="s-err" style="color:var(--bad);font-weight:600"></div>
@@ -342,4 +362,100 @@ const mo=new MutationObserver(l=>l.forEach(r=>{const e=r.target.nodeType===1?r.t
 document.querySelectorAll(".out").forEach(e=>mo.observe(e,{childList:true,characterData:true,subtree:true}));
 if("IntersectionObserver"in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.08});
 document.querySelectorAll("main h2,.grid .card,.tt,.prog,.tabs").forEach(e=>{e.classList.add("rv");io.observe(e)})}
-</script></body></html>
+</script><script>
+(function(){
+const R=AL.ru,N=33,ix=c=>R.indexOf(c),sh=(c,k)=>R[((ix(c)+k)%N+N)%N];
+const czs=(t,k)=>[...t].map(c=>sh(c,k)).join(""),atb=t=>[...t].map(c=>R[N-1-ix(c)]).join(""),
+vgs=(t,k,d)=>[...t].map((c,i)=>sh(c,d*ix(k[i%k.length]))).join(""),
+sbs=(t,d)=>[...t].map(c=>d>0?KD.ru[ix(c)]:R[KD.ru.indexOf(c)]).join("");
+const fzr=(n,L)=>{const rl=[];for(let i=0,r=0,s=1;i<L;i++){rl.push(r);if(r===0)s=1;else if(r===n-1)s=-1;r+=s}return rl};
+const fzs=(t,n)=>{const rl=fzr(n,t.length);return [...rl.keys()].sort((a,b)=>rl[a]-rl[b]||a-b).map(i=>t[i]).join("")};
+const cl=(c,k)=>`<span class="hc ${k||""}">${c}</span>`;
+const row=(a,mk,lb)=>`<div class="hr">${lb?`<span class="lb">${lb}</span>`:""}${a.map((c,i)=>cl(c,mk?mk(i):"")).join("")}</div>`;
+const grid=(t,n,dot)=>{const rl=fzr(n,t.length);let h='<div class="rails">';for(let r=0;r<n;r++)h+=`<div class="rl r${r}"><em>Р${r+1}</em>`+[...t].map((c,i)=>`<span class="rc${rl[i]===r?(dot?" on dot":" on"):""}">${rl[i]===r?(dot?"•":c):""}</span>`).join("")+"</div>";return h+"</div>"};
+const done=(r)=>`Готово! Получилось: <b>${r}</b>.`;
+const G={
+cz(m){const k=3,src=m>0?"ЭКРАН":czs("ЭКРАН",k),d=m>0?k:-k;let r="";
+const s=[{t:`Слово: <b>${src}</b>. Ключ: <b>${k}</b>. ${m>0?"Шифруем: идём вперёд":"Расшифровываем: идём назад"} на ${k} буквы.`,v:row([...R]),r}];
+[...src].forEach(c=>{const a=ix(c),b=((a+d)%N+N)%N,ps=[];for(let j=1;j<k;j++)ps.push(((a+Math.sign(d)*j)%N+N)%N);const e=R[b];r+=e;
+s.push({t:`Буква <b>${c}</b>: ${[c,...ps.map(p=>R[p]),e].join(" → ")}. Получилась <b>${e}</b>.`,v:row([...R],j=>j===a?"s":j===b?"e":ps.includes(j)?"p":""),r})});
+s.push({t:done(r),v:row([...R]),r});return{steps:s,len:src.length}},
+at(){const src="МЫШЬ",rv=[...R].reverse();let r="";
+const s=[{t:`Слово: <b>${src}</b>. Выписываем алфавит и под ним тот же алфавит наоборот. Шифровать и расшифровывать можно одним и тем же действием.`,v:row([...R],null,"Алфавит")+row(rv,null,"Наоборот"),r}];
+[...src].forEach(c=>{const a=ix(c),e=R[N-1-a];r+=e;
+s.push({t:`Буква <b>${c}</b> стоит в верхней строке. Берём букву под ней: <b>${e}</b>.`,v:row([...R],j=>j===a?"s":"","Алфавит")+row(rv,j=>j===a?"e":"","Наоборот"),r})});
+s.push({t:done(r)+" Если применить Атбаш к результату ещё раз, вернётся исходное слово.",v:row([...R],null,"Алфавит")+row(rv,null,"Наоборот"),r});return{steps:s,len:src.length}},
+vg(m){const key="ДА",pl="ЗВОНОК",src=m>0?pl:vgs(pl,key,1),d=m>0?1:-1,kk=[...src].map((_,i)=>key[i%2]);let r="";
+const s=[{t:`Слово: <b>${src}</b>. Ключ: <b>${key}</b>. Записываем ключ под словом и повторяем, пока не хватит букв. Шаги от А: А — 0, Б — 1, В — 2, Г — 3, Д — 4.`,v:row([...src],null,"Текст")+row(kk,null,"Ключ"),r}];
+[...src].forEach((c,i)=>{const kn=ix(kk[i]),e=sh(c,d*kn);r+=e;
+s.push({t:`Буква <b>${c}</b>, ключ <b>${kk[i]}</b> (${kn} ${kn===0?"шагов":"шаг"+(kn<5?"а":"ов")}). Двигаем ${c} ${m>0?"вперёд":"назад"} на ${kn}: получилась <b>${e}</b>.`,v:row([...src],j=>j===i?"e":"","Текст")+row(kk,j=>j===i?"s":"","Ключ")+row([...r],null,"Итог"),r})});
+s.push({t:done(r),v:row([...src],null,"Текст")+row(kk,null,"Ключ")+row([...r],null,"Итог"),r});return{steps:s,len:src.length}},
+fz(m){const pl="УЧИТЕЛЬ",n=3,ct=fzs(pl,n),rl=fzr(n,7),cnt=[0,1,2].map(q=>rl.filter(x=>x===q).length);let s;
+if(m>0){const pt=[0,1,2].map(q=>[...pl].filter((_,i)=>rl[i]===q).join(""));let r="";
+s=[{t:`Слово: <b>${pl}</b>, рельсов: 3. Рисуем 3 строки. Точки показывают путь зигзага: вниз, потом вверх.`,v:grid(pl,n,1),r},{t:"Вписываем буквы по порядку вдоль зигзага.",v:grid(pl,n),r}];
+pt.forEach((p,q)=>{r+=p;s.push({t:`Читаем строку ${q+1} слева направо: <b>${p}</b>.`,v:grid(pl,n),r})});s.push({t:done(r),v:grid(pl,n),r})}
+else{const pt=[];let o=0;cnt.forEach(c=>{pt.push(ct.slice(o,o+c));o+=c});
+s=[{t:`Шифртекст: <b>${ct}</b> (7 букв), рельсов: 3. Рисуем зигзаг из точек.`,v:grid(ct,n,1),r:""},{t:`Считаем точки в строках: <b>${cnt.join(", ")}</b>.`,v:grid(ct,n,1),r:""},{t:`Режем шифртекст по этим числам: <b>${pt.join(" | ")}</b>.`,v:grid(ct,n,1),r:""},{t:"Вписываем каждую часть в свою строку слева направо, на места точек.",v:grid(pl,n),r:""},{t:`Читаем зигзагом, по столбцам слева направо. ${done(pl)}`,v:grid(pl,n),r:pl}]}
+return{steps:s,len:7}},
+sb(m){const pl="ТЕТРАДЬ",src=m>0?pl:sbs(pl,1),top=m>0?[...R]:[...KD.ru],bot=m>0?[...KD.ru]:[...R],l1=m>0?"Обычные":"Замена",l2=m>0?"Замена":"Обычные";let r="";
+const s=[{t:`Слово: <b>${src}</b>. Берём таблицу замен. Ищем букву в верхней строке и берём букву под ней.`,v:row(top,null,l1)+row(bot,null,l2),r}];
+[...src].forEach(c=>{const a=top.indexOf(c),e=bot[a];r+=e;s.push({t:`Буква <b>${c}</b> → под ней <b>${e}</b>.`,v:row(top,j=>j===a?"s":"",l1)+row(bot,j=>j===a?"e":"",l2),r})});
+s.push({t:done(r),v:row(top,null,l1)+row(bot,null,l2),r});return{steps:s,len:src.length}}};
+const pcz=czs("СЕТЬ",3),pvg=vgs("ФАЙЛ","ДА",1),psb=sbs("ДОСКА",1);
+const frag=[...new Set([...psb])].map(c=>`${c} = ${R[KD.ru.indexOf(c)]}`).join(", ");
+const C=[
+{nm:"Цезарь",g:G.cz,m:1,how:"Каждая буква сдвигается по алфавиту на одно и то же число шагов. Это число и есть ключ. Например, при ключе 3 буква А превращается в Г, а Б в Д.",
+st:["Запиши слово и ключ (число).","Найди первую букву в алфавите.","Отсчитай столько букв вперёд, сколько показывает ключ. Считай со следующей буквы, а не с той, на которой стоишь.","Если алфавит закончился, продолжай с начала: после Я идёт А.","Запиши новую букву и переходи к следующей.","<b>Расшифровка:</b> те же шаги, но считай назад."],
+er:["Путают направление: шифруем вперёд, расшифровываем назад.","Забывают букву Ё: в русском алфавите 33 буквы, и Ё стоит после Е.","Начинают считать с самой буквы, а нужно со следующей.","Забывают, что после Я снова идёт А.","Смешивают алфавиты: русское слово нужно шифровать русским алфавитом."],
+q:`Расшифруй слово <code>${pcz}</code>. Ключ 3 (идём назад), русский алфавит.`,a:"СЕТЬ",sol:[...pcz].map(c=>`${c} → ${sh(c,-3)}`).join(", ")},
+{nm:"Атбаш",g:G.at,m:0,how:"Алфавит как будто поставили перед зеркалом: первая буква меняется с последней, вторая с предпоследней и так далее. Ключ не нужен.",
+st:["Выпиши алфавит в одну строку.","Под ним выпиши тот же алфавит задом наперёд.","Найди букву сообщения в верхней строке.","Запиши букву, которая стоит под ней.","Так же поступи с остальными буквами. Пробелы и знаки не меняй.","Расшифровка выполняется точно так же."],
+er:["Забывают Ё: в русском алфавите 33 буквы, и без неё строки не совпадут.","Ищут ключ, хотя его нет.","Путают Атбаш с Цезарем: здесь нет сдвига, алфавит переворачивается.","Теряют буквы при выписывании обратного алфавита. Проверь, что в обеих строках по 33 буквы."],
+q:"Зашифруй слово <code>КОД</code> шифром Атбаш (русский алфавит, 33 буквы).",a:atb("КОД"),sol:[..."КОД"].map(c=>`${c} → ${R[N-1-ix(c)]}`).join(", ")},
+{nm:"Виженер",g:G.vg,m:1,how:"Это шифр Цезаря, у которого для каждой буквы свой сдвиг. Сдвиг берётся из ключевого слова: А — 0 шагов, Б — 1, В — 2 и так далее.",
+st:["Запиши сообщение.","Под ним подпиши ключ и повторяй его, пока не хватит букв.","Для каждой пары «буква текста и буква ключа» посчитай, сколько шагов от А до буквы ключа.","Сдвинь букву текста вперёд на столько шагов. При расшифровке сдвигай назад.","Запиши результат и переходи к следующей паре."],
+er:["Ключ не повторяется или сбивается на пробелах: пробелы буквами не считаются.","Считают шаги от Б, а не от А. Буква А — это 0 шагов.","Сдвигают ключ вместо текста.","Путают направление при расшифровке: нужно идти назад.","Забывают, что после Я идёт А."],
+q:`Ключ ДА. Расшифруй слово <code>${pvg}</code>.`,a:"ФАЙЛ",sol:[...pvg].map((c,i)=>`${c} назад на ${ix("ДА"[i%2])} → ${sh(c,-ix("ДА"[i%2]))}`).join(", ")},
+{nm:"Забор",g:G.fz,m:1,how:"Буквы остаются теми же, но меняются местами. Текст пишут зигзагом по нескольким строкам, которые называют рельсами. Потом читают строку за строкой. Ключ — число рельсов.",
+st:["Нарисуй столько строк, сколько рельсов.","Пиши буквы по диагонали: вниз до последней строки, потом вверх до первой, и так далее.","Прочитай первую строку слева направо, потом вторую, потом остальные. Получился шифртекст.","<b>Расшифровка:</b> нарисуй зигзаг из точек и посчитай точки в каждой строке.","Раздели шифртекст на части по этим числам и впиши каждую часть в свою строку.","Читай буквы зигзагом: слева направо по столбцам."],
+er:["Читают строки в неправильном порядке: нужно сверху вниз.","Забывают, что после нижней строки зигзаг идёт вверх.","Не считают точки в строках перед расшифровкой, и части шифртекста получаются неправильной длины.","Теряют или добавляют лишние буквы. Проверь длину текста."],
+q:"Зашифруй слово <code>ПОЧТА</code> шифром «забор» на 3 рельса.",a:fzs("ПОЧТА",3),sol:[0,1,2].map(q=>{const rl=fzr(3,5);return `строка ${q+1}: ${[..."ПОЧТА"].filter((_,i)=>rl[i]===q).join("")}`}).join("; ")},
+{nm:"Простая замена",g:G.sb,m:1,how:"Каждая буква заменяется другой по таблице. Таблица и есть ключ. Одна и та же буква всегда заменяется одинаково.",
+st:["Возьми таблицу замен: сверху обычные буквы, снизу заменяющие.","Чтобы зашифровать, найди букву в верхней строке и запиши букву под ней.","Чтобы расшифровать, найди букву в нижней строке и запиши букву над ней.","Если таблицы нет, посчитай частоту букв: самые частые в русском О, Е, А, И, Н, Т.","Подставляй догадки и проверяй, получаются ли осмысленные слова."],
+er:["Путают строки таблицы: при расшифровке ищут букву не в той строке.","Заменяют две разные буквы одной и той же.","Не проверяют, получилось ли осмысленное слово.","Считают, что частота букв даёт точный ответ. Это только подсказка."],
+q:`Расшифруй слово <code>${psb}</code> по таблице (в ней только нужные буквы): ${frag}.`,a:"ДОСКА",sol:[...psb].map(c=>`${c} → ${R[KD.ru.indexOf(c)]}`).join(", ")}];
+const tb=$("htabs"),ps=$("hpanels"),tbs=[];
+tb.setAttribute("role","tablist");
+function pick(i,f,sc){tbs.forEach((b,j)=>{b.classList.toggle("on",j===i);b.setAttribute("aria-selected",j===i);b.tabIndex=j===i?0:-1;$("hp"+j).classList.toggle("on",j===i)});
+tb.scrollTo({left:tbs[i].offsetLeft-(tb.clientWidth-tbs[i].offsetWidth)/2,behavior:"smooth"});if(f)tbs[i].focus();
+if(sc&&innerWidth<700)setTimeout(()=>tb.scrollIntoView({behavior:"smooth",block:"start"}),60)}
+C.forEach((c,ci)=>{
+const b=document.createElement("button");b.textContent=c.nm;b.id="ht"+ci;b.setAttribute("role","tab");b.setAttribute("aria-controls","hp"+ci);
+b.onclick=()=>pick(ci,false,true);
+b.onkeydown=e=>{const n=C.length;let j=-1;if(e.key==="ArrowRight")j=(ci+1)%n;else if(e.key==="ArrowLeft")j=(ci+n-1)%n;else if(e.key==="Home")j=0;else if(e.key==="End")j=n-1;if(j>=0){e.preventDefault();pick(j,true,true)}};
+tb.appendChild(b);tbs.push(b);
+const p=document.createElement("div");p.className="panel";p.id="hp"+ci;p.setAttribute("role","tabpanel");p.setAttribute("aria-labelledby","ht"+ci);
+p.innerHTML=`<div class="hgrid"><section class="hb"><h3>Как работает шифр</h3><p>${c.how}</p></section><section class="hb"><h3>Алгоритм решения</h3><ol>${c.st.map(x=>`<li>${x}</li>`).join("")}</ol></section></div>
+<section class="hb"><h3>Пример с разбором</h3>${c.m?'<div class="row"><button class="ghost hm on" data-m="1">Зашифровать</button><button class="ghost hm" data-m="-1">Расшифровать</button></div>':""}
+<div class="hvis"></div><div class="hres"></div><div class="htxt"></div>
+<div class="row"><button class="ghost hprev">← Предыдущий шаг</button><span class="hcnt"></span><button class="hnext">Показать следующий шаг →</button><button class="ghost hreset">Сначала</button></div></section>
+<section class="hb"><h3>Попробуй сам</h3><p>${c.q}</p><div class="row"><input class="hin" placeholder="Твой ответ" autocomplete="off"><button class="hck">Проверить</button><span class="hmsg"></span><button class="ghost hsh" style="display:none">Показать разбор</button></div><div class="hsol"></div></section>
+<section class="hb"><h3>Частые ошибки</h3><ul>${c.er.map(x=>`<li>${x}</li>`).join("")}</ul></section>`;
+ps.appendChild(p);
+const q=s=>p.querySelector(s);let mode=1,k=0,S=c.g(mode);
+function rd(){const st=S.steps[k],v=q(".hvis");v.innerHTML=st.v;q(".hres").textContent=[...st.r.padEnd(S.len,"_")].join(" ");q(".htxt").innerHTML=st.t;q(".hcnt").textContent=`Шаг ${k+1} из ${S.steps.length}`;
+q(".hprev").disabled=k===0;q(".hnext").disabled=k===S.steps.length-1;q(".hnext").textContent=k===S.steps.length-1?"Это последний шаг":"Показать следующий шаг →";
+const el=v.querySelector(".e,.s");if(el)v.scrollTo({left:el.offsetLeft-v.clientWidth/2+el.offsetWidth/2,behavior:"smooth"})}
+q(".hnext").onclick=()=>{if(k<S.steps.length-1){k++;rd()}};q(".hprev").onclick=()=>{if(k>0){k--;rd()}};q(".hreset").onclick=()=>{k=0;rd()};
+p.querySelectorAll(".hm").forEach(x=>x.onclick=()=>{mode=+x.dataset.m;p.querySelectorAll(".hm").forEach(y=>y.classList.toggle("on",y===x));S=c.g(mode);k=0;rd()});
+let bad=0;const inp=q(".hin"),msg=q(".hmsg"),sol=q(".hsol"),shb=q(".hsh");
+const reveal=()=>{sol.style.display="block";sol.innerHTML=`<b>Разбор:</b> ${c.sol}. Ответ: <b>${c.a}</b>.`};
+q(".hck").onclick=()=>{if(norm(inp.value)===norm(c.a)){msg.textContent="✓ Верно!";msg.style.color="var(--ok)";shb.style.display="none";reveal()}
+else{bad++;msg.textContent="✗ Пока не то. Пройди алгоритм по шагам ещё раз.";msg.style.color="var(--bad)";if(bad>=2)shb.style.display="inline-flex"}};
+inp.addEventListener("keydown",e=>{if(e.key==="Enter")q(".hck").click()});inp.addEventListener("input",()=>{msg.textContent=""});
+shb.onclick=()=>{reveal();shb.style.display="none"};
+rd()});
+pick(0,false,false);
+})();
+</script>
+</body></html>

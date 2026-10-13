@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="logo.png">
 <title>Шифрование</title>
 <style>
 :root{--pri:#6d28d9;--dk:#5b21b6;--soft:#f3efff;--mid:#e4dbfd;--bd:#cdbdf7;--ink:#2a1f45;--ok:#15803d;--bad:#b91c1c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -177,10 +176,10 @@ details.hint[open]>div{animation:fadeUp .25s ease}
 .hb ol,.hb ul{margin:6px 0;padding-left:22px}.hb li{margin:5px 0}
 .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.hgrid .hb{margin:0}
 .hvis{position:relative;overflow-x:auto;padding:8px 2px;margin:8px 0}
-.hr{display:flex;gap:3px;margin:3px 0;min-width:max-content;align-items:center}
-.hr .lb{width:74px;flex:none;font-size:.8rem;color:#6b5f8a;position:sticky;left:0;background:#fff}
-.hc{width:30px;height:32px;display:grid;place-items:center;border:1px solid var(--bd);border-radius:7px;font:600 1rem ui-monospace,monospace;background:#fff}
-.hc.s{background:#f59e0b;color:#fff;border-color:#f59e0b}.hc.p{background:var(--mid)}.hc.e{background:var(--pri);color:#fff;border-color:var(--pri)}
+.xr{display:flex;gap:3px;margin:3px 0;min-width:max-content;align-items:center}
+.xr .lb{width:74px;flex:none;font-size:.8rem;color:#6b5f8a;position:sticky;left:0;background:#fff}
+.xc{width:30px;height:32px;display:grid;place-items:center;border:1px solid var(--bd);border-radius:7px;font:600 1rem ui-monospace,monospace;background:#fff}
+.xc.s{background:#f59e0b;color:#fff;border-color:#f59e0b}.xc.p{background:var(--mid)}.xc.e{background:var(--pri);color:#fff;border-color:var(--pri)}
 .hres{font:700 1.5rem ui-monospace,monospace;letter-spacing:.12em;color:var(--dk);background:var(--soft);border-radius:10px;padding:8px 14px;margin:8px 0;min-height:52px;word-break:break-all}
 .htxt{font-size:1.08rem;margin:8px 0;min-height:3.4em}
 .hcnt{font-weight:700;color:var(--pri)}.hmsg{font-weight:600}
@@ -188,6 +187,7 @@ details.hint[open]>div{animation:fadeUp .25s ease}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none}
 button.ghost.hm.on{background:var(--pri);color:#fff}
 .rl .rc.on.dot{background:var(--mid);color:var(--pri)}
+.vt table{table-layout:fixed;width:calc(var(--n,27)*28px);max-width:none}.vt td{width:28px;min-width:28px;max-width:28px;height:28px;padding:0;overflow:hidden;box-sizing:border-box;font-size:12px;line-height:1}
 </style></head><body>
 <header><h1>Шифрование</h1></header>
 <nav><a href="#th">Теория</a><a href="#how">Как решить</a><a href="#c">Шифры</a><a href="#t">Задания</a></nav>
@@ -289,7 +289,7 @@ $("a-grid").innerHTML=[...A].map((c,i)=>'<div class="'+(t.includes(c)||t.include
 let cells=[],vA="";
 function bt(A){const n=A.length;let h='<table><tr><td class="hd"></td>'+[...A].map(c=>'<td class="hd">'+c+"</td>").join("")+"</tr>";
 for(let r=0;r<n;r++){h+='<tr><td class="hd">'+A[r]+"</td>";for(let c=0;c<n;c++)h+="<td>"+A[(r+c)%n]+"</td>";h+="</tr>"}
-$("v-tab").innerHTML=h+"</table>";cells=[...$("v-tab").querySelectorAll("tr")].map(r=>[...r.children])}
+$("v-tab").innerHTML=h+"</table>";$("v-tab").style.setProperty("--n",n+1);cells=[...$("v-tab").querySelectorAll("tr")].map(r=>[...r.children])}
 function vig(){const A=AL[$("v-al").value],n=A.length;if(A!==vA){bt(A);vA=A}
 const key=[...$("v-key").value.toUpperCase()].filter(c=>A.includes(c)),d=+$("v-md").value;let ki=0,o="",st=[];
 cells.flat().forEach(c=>c.classList.remove("hx","hr","hc"));
@@ -371,8 +371,8 @@ vgs=(t,k,d)=>[...t].map((c,i)=>sh(c,d*ix(k[i%k.length]))).join(""),
 sbs=(t,d)=>[...t].map(c=>d>0?KD.ru[ix(c)]:R[KD.ru.indexOf(c)]).join("");
 const fzr=(n,L)=>{const rl=[];for(let i=0,r=0,s=1;i<L;i++){rl.push(r);if(r===0)s=1;else if(r===n-1)s=-1;r+=s}return rl};
 const fzs=(t,n)=>{const rl=fzr(n,t.length);return [...rl.keys()].sort((a,b)=>rl[a]-rl[b]||a-b).map(i=>t[i]).join("")};
-const cl=(c,k)=>`<span class="hc ${k||""}">${c}</span>`;
-const row=(a,mk,lb)=>`<div class="hr">${lb?`<span class="lb">${lb}</span>`:""}${a.map((c,i)=>cl(c,mk?mk(i):"")).join("")}</div>`;
+const cl=(c,k)=>`<span class="xc ${k||""}">${c}</span>`;
+const row=(a,mk,lb)=>`<div class="xr">${lb?`<span class="lb">${lb}</span>`:""}${a.map((c,i)=>cl(c,mk?mk(i):"")).join("")}</div>`;
 const grid=(t,n,dot)=>{const rl=fzr(n,t.length);let h='<div class="rails">';for(let r=0;r<n;r++)h+=`<div class="rl r${r}"><em>Р${r+1}</em>`+[...t].map((c,i)=>`<span class="rc${rl[i]===r?(dot?" on dot":" on"):""}">${rl[i]===r?(dot?"•":c):""}</span>`).join("")+"</div>";return h+"</div>"};
 const done=(r)=>`Готово! Получилось: <b>${r}</b>.`;
 const G={
